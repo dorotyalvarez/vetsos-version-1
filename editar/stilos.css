@@ -1,0 +1,107 @@
+.info {
+    background-image: url(https://img.freepik.com/vector-gratis/diseno-fondo-forma-geometrica-abstracta-elegante_1017-50120.jpg?t=st=1713293326~exp=1713296926~hmac=3ac2979c1ea1cdf40f54e492ccf8c13848fec19404e9292a1fc7833233371f98&w=1380);
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    /*padding: 20px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border-radius: 25%;*/
+    padding: 20px;
+    border-radius: 0 0 30% 30%;
+}
+
+.our-servicios {
+    background-color: white;
+}
+
+.client {
+    background-color: white;
+}
+
+.gallery {
+    background-image: url(https://img.freepik.com/vector-gratis/diseno-fondo-forma-geometrica-abstracta-elegante_1017-50120.jpg?t=st=1713293326~exp=1713296926~hmac=3ac2979c1ea1cdf40f54e492ccf8c13848fec19404e9292a1fc7833233371f98&w=1380);
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+}
+
+.map {
+    background-color: white;
+}
+
+.carru {
+    background-color: rgb(246, 247, 248);
+    border-radius: 0 0 10px 10px;
+    padding: 20px;
+}
+
+.carousel-image-container {
+    border: 5px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.nani {
+    background-color: rgb(246, 247, 248);
+}
+
+.contactos {
+    /* background-image: url(https://img.freepik.com/vector-gratis/ilustracion-icono-vector-dibujos-animados-hueso-mordedura-perro-pug-lindo-naturaleza-animal-icono-concepto-aislado-premium_138676-7370.jpg?t=st=1713126122~exp=1713129722~hmac=d09a06a3cd5a8038552ea3585dc29699faece004282046b7651f3679c2ef29a6&w=826);
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;*/
+    background-color: white;
+}
+
+.footer {
+    background-color: rgb(6, 6, 6);
+    color: white;
+}
+
+.navbar {
+    background-color: rgb(136, 237, 237);
+    /* Color opaco */
+    transition: background-color 0.2s ease;
+    /* Transición suave */
+    position: fixed;
+    /* Fija el navbar en la parte superior */
+    width: 100%;
+    /* Ocupa todo el ancho */
+    z-index: 1000;
+    /* Asegura que esté por encima de otros elementos */
+}
+
+.navbar.transparent {
+    background-color: rgba(237, 243, 243, 0);
+    /* Color transparente */
+}
+
+#navbar {
+    height: 120px;
+    /* Altura deseada del navbar */
+}
+
+.navbar-nav .nav-link {
+    line-height: 80px;
+    /* Alineación vertical del contenido del navbar */
+}
+
+.zoomP {
+    /* Aumentamos la anchura y altura durante 2 segundos * */
+    transition: width 1.1s, height 1.1s, transform 1.1s;
+    -moz-transition: width 1.1s, height 1.1s, -moz-transform 1.1s;
+    -webkit-transition: width 1.2s, height 1.1s, -webkit-transform 1.1s;
+    -o-transition: width 1.1s, height 1.1s, -o-transform 1.1s;
+}
+
+.zoomP:hover {
+    /* /tranformamos el elemento al pasar el mouse por encima al doble de */
+    /* su tamano con scale(2).* */
+    transform: scale(1.05);
+    /*(150%zoom Note:if the zoom is too large,it will go outside of the viewport)*/
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05)
+}
+
+@media (max-width: 768px) {
+    .info {
+        background-image: url("img2.jpg");
+    }
+}

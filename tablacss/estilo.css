@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+
+/* Estilos CSS para la interfaz de usuario */
+
+.perfil-usuario {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.perfil-usuario .informacion-personal,
+.perfil-usuario .informacion-profesional {
+    margin-bottom: 15px;
+}
+
+.perfil-usuario label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.perfil-usuario input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.perfil-usuario button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.perfil-usuario button:hover {
+    background-color: #45a049;
+}

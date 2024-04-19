@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+
+
+<html>
+
+<head>
+    <title>Inicio de Sesión</title>
+</head>
+
+<body>
+    <h2>Inicio de Sesión</h2>
+    <div class="input-group custom">
+        <input type="text" name="user_name" id="user_name" class="form-control form-control-lg" placeholder="Username" />
+        <div class="input-group-append custom">
+            <span class="input-group-text"><i class="icon-copy dw dw-user1"></i
+                ></span>
+        </div>
+    </div>
+    <div class="input-group custom">
+        <input type="password" name="pass" id="pass" class="form-control form-control-lg" placeholder="**********" />
+        <div class="input-group-append custom">
+            <span class="input-group-text"><i class="dw dw-padlock1"></i
+                ></span>
+        </div>
+    </div>
+    <button id="login_button" class="btn btn-primary btn-lg btn-block">Iniciar Sesión</button>
+    <div id="message">
+
+    </div>
+
+    </div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="controllers/prueva.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#login_button").on("click", function() {
+
+            var user_name = $("#user_name").val();
+            var pass = $("#pass").val();
+
+            if (user_name == '' || pass == '') {
+                alert("LOS DOS CAMPOS REQUERIDOS");
+            } else {
+                $.ajax({
+                    url: 'controllers/cotrolador.php',
+                    method: 'POST',
+                    data: {
+                        user: user_name,
+                        pwd: pass
+                    },
+                    success: function(data) {
+                        if (data == '1') {
+                            location.href = "index.html";
+                        } else {
+                            location.href = "";
+                        }
+                        $("#message").html(data);
+                    }
+                })
+            }
+        })
+    });
+</script>
+
+
+</html>

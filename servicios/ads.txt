@@ -1,0 +1,77 @@
+<?php
+// Incluir el archivo que contiene la clase ConexionLogin
+include '../vetsos/php/Conexion_BD.php';
+
+// Crear una instancia de la clase ConexionLogin
+$conexion = new ConexionLogin();
+
+// Establecer la conexión con la base de datos
+$db = $conexion->conectar();
+
+// Consulta SQL para obtener todos los datos de la tabla usuarios
+$sql = "SELECT * FROM usuarios";
+
+// Ejecutar la consulta
+$resultado = $db->query($sql);
+
+// Inicializar un array para almacenar los resultados en formato JSON
+$resultados_json = array();
+
+// Comprobar si la consulta fue exitosa
+if ($resultado) {
+    // Recorrer los resultados y almacenarlos en el array de resultados JSON
+    while ($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
+        $resultados_json[] = $fila;
+    }
+} else {
+    echo "Error al ejecutar la consulta: " . $db->errorInfo()[2];
+}
+
+// Desconectar de la base de datos
+$conexion->desconectar();
+
+// Mostrar los resultados en formato JSON
+echo json_encode($resultados_json);
+?>
+
+
+aqui la coneccion a base de datos generica
+
+
+<?php
+// Conexión a la base de datos
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "login_register";
+
+$conn = new mysqli($servername, $username, $password, $database);
+
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+// Verificar si se enviaron datos de inicio de sesión
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recuperar el nombre de usuario y la contraseña del formulario
+    $usuario = $_POST['usuario'];
+    $contraseña = $_POST['contraseña'];
+
+    // Consulta para verificar el inicio de sesión
+    $sql = "SELECT * FROM usuarios WHERE user_name='$usuario' AND password='$contraseña'";
+    $resultado = $conn->query($sql);
+
+    // Verificar si se encontró un usuario con las credenciales proporcionadas
+    if ($resultado->num_rows == 1) {
+        // Inicio de sesión exitoso
+        header("Location: index.html");
+        exit;
+    } else {
+        // Inicio de sesión fallido
+        echo "Inicio de sesión fallido. Por favor, verifica tu nombre de usuario y contraseña.";
+    }
+}
+
+// Cerrar conexión
+$conn->close();
+?>
