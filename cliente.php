@@ -2,6 +2,9 @@
 require_once('funtion/scripts.php');
 require_once('template.php');
 require_once('php/conexion.php');
+if ($errorOcurred) {
+    redirectToErrorPage(404); // Por ejemplo, redirecciona a la página 404.html en caso de un error 404
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -104,6 +107,7 @@ require_once('php/conexion.php');
 <div class="mt-3 text-center">
     <button onclick="window.location.href = 'editar.php'" class="btn btn-warning">Volver a Usuarios</button>
 </div>
+
 </body>
     </container> 
     <div>

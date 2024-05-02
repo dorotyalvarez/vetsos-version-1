@@ -5,7 +5,8 @@ require_once('consultas/consultar_mensajes.php');
 
 <!DOCTYPE html>
 <html lang="en">
-<?= Head('usuario') ?>
+<?= Head('mensajes') ?>
+
 <?= starBody() ?>
 <style>  .custom-title {
     text-align: center;
@@ -24,7 +25,7 @@ require_once('consultas/consultar_mensajes.php');
 <!-- HTML con el título personalizado -->
 <center><h2 class="custom-title">Mensajes Pagina Wed</h2></center>
 <style> .bg-lightblue {
-    background-color: ; /* Celeste cielo claro */
+    background-color: #DCD6D2; /* Celeste cielo claro */
 }
 </style>
 <div class="card bg-lightblue" >

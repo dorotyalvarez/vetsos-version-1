@@ -25,12 +25,17 @@ if (empty($_GET['id_cliente'])) {
 // Obtener el ID del cliente de la URL
 $idCliente = $_GET["id_cliente"];
 
-// Realizar la consulta para obtener los detalles del cliente con el ID proporcionado
-$conexion = new PDO("mysql:host=localhost;dbname=login_register","root","");
-$stament = $conexion->prepare("SELECT * FROM cliente WHERE idusuario = :id");
-$stament->bindParam(':id', $idCliente);
-$stament->execute();
-$cliente = $stament->fetch(PDO::FETCH_ASSOC);
+require_once('php/Conexion_BD.php'); // Incluir el archivo de conexión
+
+// Crear una instancia de la conexión a la base de datos
+$conexion = new conexionLogin();
+$db = $conexion->conectar();
+
+// Preparar y ejecutar la consulta para obtener los detalles del cliente
+$statement = $db->prepare("SELECT * FROM cliente WHERE idusuario = :id");
+$statement->bindParam(':id', $idCliente);
+$statement->execute();
+$cliente = $statement->fetch(PDO::FETCH_ASSOC);
 
 // Verificar si se encontró el cliente
 if (!$cliente) {

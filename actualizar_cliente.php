@@ -1,24 +1,25 @@
 <?php
 require_once ('template.php');
 require_once('funtion/scripts.php');
+require_once('php/Conexion_BD.php'); // Incluir el archivo de conexión
 
 // Verificar si se proporcionó un ID de cliente en la URL
 if (empty($_GET['id_cliente'])) {
     header('Location: ');
-    exit; // Detener la ejecución del script
-    
+    exit; // Detener la ejecución del script 
 }
 
 // Obtener el ID del cliente de la URL
 $idCliente = $_GET["id_cliente"];
 
-
 // Realizar la consulta para obtener los detalles del cliente con el ID proporcionado
-$conexion = new PDO("mysql:host=localhost;dbname=login_register","root","");
-$stament = $conexion->prepare("SELECT * FROM cliente WHERE idusuario = :id");
-$stament->bindParam(':id', $idCliente);
-$stament->execute();
-$cliente = $stament->fetch(PDO::FETCH_ASSOC);
+$conexion = new conexionLogin(); // Crear una instancia de la clase de conexión
+$db = $conexion->conectar(); // Conectarse a la base de datos
+
+$statement = $db->prepare("SELECT * FROM cliente WHERE idusuario = :id");
+$statement->bindParam(':id', $idCliente);
+$statement->execute();
+$cliente = $statement->fetch(PDO::FETCH_ASSOC);
 
 // Verificar si se encontró el cliente
 if (!$cliente) {
@@ -39,6 +40,7 @@ $clienteArray = array(
     'active' => $cliente['active'],
     'imagen_perfil' => $cliente['imagen_perfil']
 );
+
 ?>
 
 <!DOCTYPE html>
@@ -154,6 +156,10 @@ $clienteArray = array(
                     document.getElementById("mensaje").innerHTML = '<p style="color: green;">¡Los datos se han guardado correctamente!</p>';
                     // Limpiar el formulario después de mostrar el mensaje
                     document.getElementById("formulario").reset();
+                    // Redireccionar a editar.php después de 2 segundos
+                    setTimeout(function() {
+                        window.location.href = 'editar.php';
+                    }, 2000); // Tiempo en milisegundos
                 } else {
                     // Mostrar mensaje de error
                     document.getElementById("mensaje").innerHTML = '<p style="color: red;">Error al guardar los datos.</p>';
@@ -162,7 +168,8 @@ $clienteArray = array(
         };
         xhr.send(formData);
     });
-  </script>
+</script>
+
   <script src="funtion/preview_imagen.js"></script>
 
 <?= endBody() ?>

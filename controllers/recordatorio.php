@@ -1,10 +1,11 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (isset($_POST["idMascota"]) && isset($_POST["textoRecordatorio"]) && isset($_POST["fechaVencimiento"])) {
+    if (isset($_POST["idMascota"]) && isset($_POST["textoRecordatorio"]) && isset($_POST["fechaVencimiento"])&& isset($_POST["nombre"]) ) {
         // Recibir los datos del formulario
         $idMascota = $_POST["idMascota"];
         $textoRecordatorio = $_POST["textoRecordatorio"];
         $fechaVencimiento = $_POST["fechaVencimiento"];
+        $nombre_cliente = $_POST["nombre"];
 
         try {
             // Establecer la conexión a la base de datos
@@ -13,11 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $db = $conexion->conectar();
 
             // Preparar la consulta SQL para insertar el recordatorio
-            $statement = $db->prepare("INSERT INTO recordatorios (idMascota, textoRecordatorio, fechaVencimiento) VALUES (:idMascota, :textoRecordatorio, :fechaVencimiento)");
+            $statement = $db->prepare("INSERT INTO recordatorios (idMascota, textoRecordatorio, fechaVencimiento, nombre) VALUES (:idMascota, :textoRecordatorio, :fechaVencimiento, :nombre_cliente)");
             // Vincular los parámetros
             $statement->bindParam(':idMascota', $idMascota);
             $statement->bindParam(':textoRecordatorio', $textoRecordatorio);
             $statement->bindParam(':fechaVencimiento', $fechaVencimiento);
+            $statement->bindParam(':nombre_cliente', $nombre_cliente);
             // Ejecutar la consulta
             $statement->execute();
 
@@ -41,6 +43,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 ?>
-
 
 

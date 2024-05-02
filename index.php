@@ -7,7 +7,20 @@ if (empty($_SESSION['active'])) {
 }
 error_reporting(E_ALL);
 require_once('funtion/scripts.php');
+require_once(__DIR__ . '/consultas/estadistica.php');
+$clientesActivos = obtenerClientesActivos();
+$citasAtendidas = obtenerCitasAtendidas();
+$citasPendientes = obtenerCitasPendientes();
+$mensajesPendientes =obtenerMensajesPendientes();
+$recordatoriosPendientes =obtenerRecordatoriosPendientes();
+$totalMascotas= obtenerTotalMascotas();
+$totaMensajesAtendidos = obtenerMensajesTotales();
+$totaMensajes = obtenerTotalMensajes();
 
+
+require_once(__DIR__ . '/consultas/notificaciones.php');
+
+$recordatorios = consultarRecordatorios();
 
 ?>
 
@@ -111,42 +124,7 @@ require_once('funtion/scripts.php');
         <div class="header-left">
             <div class="menu-icon bi bi-list"></div>
             <div class="search-toggle-icon bi bi-search" data-toggle="header_search"></div>
-            <div class="header-search">
-                <form>
-                    <div class="form-group mb-0">
-                        <i class="dw dw-search2 search-icon"></i>
-                        <input type="text" class="form-control search-input" placeholder="Search Here" />
-                        <div class="dropdown">
-                            <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
-                                <i class="ion-arrow-down-c"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="form-group row">
-                                    <label class="col-sm-12 col-md-2 col-form-label">From</label>
-                                    <div class="col-sm-12 col-md-10">
-                                        <input class="form-control form-control-sm form-control-line" type="text" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-12 col-md-2 col-form-label">To</label>
-                                    <div class="col-sm-12 col-md-10">
-                                        <input class="form-control form-control-sm form-control-line" type="text" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Subject</label>
-                                    <div class="col-sm-12 col-md-10">
-                                        <input class="form-control form-control-sm form-control-line" type="text" />
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <button class="btn btn-primary">Search</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            
         </div>
         <div class="header-right">
             <div class="text-center mt-4">
@@ -162,84 +140,48 @@ require_once('funtion/scripts.php');
                 </div>
             </div>
             <div class="user-notification">
-                <div class="dropdown">
-                    <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
-                        <i class="icon-copy dw dw-notification"></i>
-                        <span class="badge notification-active"></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="notification-list mx-h-350 customscroll">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <img src="vendors/images/img.jpg" alt="" />
-                                        <h3>John Doe</h3>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit, sed...
-                                        </p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="vendors/images/photo1.jpg" alt="" />
-                                        <h3>Lea R. Frith</h3>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit, sed...
-                                        </p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="vendors/images/photo2.jpg" alt="" />
-                                        <h3>Erik L. Richards</h3>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit, sed...
-                                        </p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="vendors/images/photo3.jpg" alt="" />
-                                        <h3>John Doe</h3>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit, sed...
-                                        </p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="vendors/images/photo4.jpg" alt="" />
-                                        <h3>Renee I. Hansen</h3>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit, sed...
-                                        </p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="vendors/images/img.jpg" alt="" />
-                                        <h3>Vicki M. Coleman</h3>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit, sed...
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+    <div class="dropdown">
+        <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
+            <i class="icon-copy dw dw-notification"></i>
+            <span class="badge notification-active"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+            <div class="notification-list mx-h-350 customscroll">
+                <ul>
+                    <?php
+                    // Llamamos a la función para obtener los recordatorios
+                    $recordatorios = consultarRecordatorios();
+
+                    // Verificamos si hay recordatorios disponibles
+                    if ($recordatorios !== null && count($recordatorios) > 0) {
+                        // Iteramos sobre los recordatorios y los mostramos en la lista
+                        foreach ($recordatorios as $recordatorio) {
+                            echo '<li>';
+                            echo '<a href="#">';
+                            echo '<img src="vendors/images/icons8-recordatorios-de-citas.gif" alt="" />';
+							echo '<h3> Mascota :' . $recordatorio['NombreMascota'] . '</h3>';
+                            echo '<h3> Cliente :' . $recordatorio['nombre'] . '</h3>';
+							echo '<p style="color: red;" > vence: ' . $recordatorio['fechaVencimiento'] . '</p>';
+                            echo '<p> Mensaje :' . $recordatorio['textoRecordatorio'] . '</p>';
+                            echo '<p> Fecha :' . $recordatorio['fechaCreacion'] . '</p>';
+                            echo '</a>';
+                            echo '</li>';
+                        }
+                    } else {
+                        // Si no hay recordatorios, mostramos un mensaje indicando que no hay ninguno
+                        echo '<li>No hay recordatorios disponibles</li>';
+                    }
+                    ?>
+                </ul>
             </div>
+        </div>
+    </div>
+</div>
             <div class="user-info-dropdown">
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <span class="user-icon">
-                            <img src="vendors/images/photo1.jpg" alt="" />
+                            <img src="vendors/images/1876759.png" alt="" />
                         </span>
                         <span class="user-name"><?php echo $_SESSION['nombre']; ?></span>
                     </a>
@@ -350,8 +292,8 @@ require_once('funtion/scripts.php');
     <div class="left-side-bar">
         <div class="brand-logo">
             <a href="index.php">
-                <img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
-                <img src="vendors/images/deskapp-logo-white.svg" alt="" class="light-logo" />
+                <img src="vendors/images/untitled1.svg" alt="" class="dark-logo" />
+                <img src="vendors/images/untitled2.svg" alt="" class="light-logo" />
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
                 <i class="ion-close-round"></i>
@@ -366,12 +308,7 @@ require_once('funtion/scripts.php');
                         </a>
 
                     </li>
-                    <li class="dropdown">
-                        <a href="estadistica.php" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-textarea-resize"></span><span class="mtext">Estadistica</span>
-                        </a>
 
-                    </li>
                     <li class="dropdown">
                         <a href="usuarios.php" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-archive"></span><span class="mtext">Usuarios</span>
@@ -396,16 +333,7 @@ require_once('funtion/scripts.php');
                         </a>
 
                     </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-file-earmark-text"></span><span class="mtext">Opciones Adicionales</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="login.php">Login</a></li>
-                            <li><a href="forgot-password.html">Forgot Password</a></li>
-                            <li><a href="reset-password.html">Reset Password</a></li>
-                        </ul>
-                    </li>
+                  
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon bi bi-bug"></span><span class="mtext">Error Pages</span>
@@ -492,8 +420,9 @@ require_once('funtion/scripts.php');
                             <!-- Formulario con AJAX -->
                             <form id="searchForm">
                                 <div class="input-group mb-3">
-                                    <input type="number" class="form-control" placeholder="Buscar por cédula..." aria-label="Buscar por cédula..." id="searchInput" name="cedula">
+                                    <input type="number" class="form-control" placeholder="Buscar por cédula..." class="search-toggle-icon bi bi-search" data-toggle="header_search" aria-label="Buscar por cédula..." id="searchInput" name="cedula">
                                     <div class="input-group-append">
+                                    
                                         <button class="btn btn-primary" type="submit">Buscar</button>
                                     </div>
                                 </div>
@@ -609,37 +538,41 @@ require_once('funtion/scripts.php');
     <section class="d-flex justify-content-between">
         <div class="container mt-4">
             <div class="row">
-                <div class="col-md-3">.</div>
+                <div class="col-md-2">.</div>
                 <div class="col-md-3">
-                    <div class="card bg-primary">
-                        <div class="card-body d-flex">
+                    <div class="card bg-success">
+                        <div class="card-body d-flex align-item-center justify-content-between">
                             usuarios
                             <i class="bi bi-person-circle"></i>
+                            
                         </div>
-                        <div class="card-footer d-flex align-item justify-content">
-                            footer
+                        <div class="card-footer d-flex align-item-center justify-content-between">
+                          Total: <?php echo $clientesActivos; ?>
+                        <a href="<?php /* Aquí la URL para ver detalles */ ?>" class="text-white">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-info">
+                        <div class="card-body d-flex align-item-center justify-content-between">
+                            citas Atendidas     
+                            <i class="bi bi-calendar-event-fill"></i>
+                        </div>
+                        <div class="card-footer d-flex align-item-center justify-content-between"> 
+                            Total: <?php echo $citasAtendidas; ?>
+                        <a href="<?php /* URL para ver detalles */ ?>" class="text-white">Ver detalles</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card bg-primary">
-                        <div class="card-body d-flex">
-                            usuarios
-                            <i class="bi bi-person-circle"></i>
+                    <div class="card bg-warning">
+                        <div class="card-body d-flex align-item-center justify-content-between">
+                            citas pendiente
+                            <i class="bi bi-bank"></i>
                         </div>
-                        <div class="card-footer">
-                            footer
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-primary">
-                        <div class="card-body d-flex">
-                            usuarios
-                            <i class="bi bi-person-circle"></i>
-                        </div>
-                        <div class="card-footer">
-                            footer
+                        <div class="card-footer d-flex align-item-center justify-content-between">
+                        <span><?php echo obtenerCitasPendientes(); ?></span>
+                        <a href="<?php /* Agrega el enlace para ver detalles */ ?>" class="text-white">ver detalles</a>
                         </div>
                     </div>
                 </div>
@@ -648,11 +581,76 @@ require_once('funtion/scripts.php');
         </div>
     </section>
 
+    
 
+    <section class="d-flex ">
+        <div class="container mt-4">
+            <div class="row justify-content-end">
+                <div class="col-md-1">.</div>
+                <div class="col-md-2">
+                    <div class="card bg-success">
+                        <div class="card-body d-flex align-item-center justify-content-between">
+                            pendientes
+                            <i class="bi bi-chat-square-dots-fill"></i>
+                        </div>
+                        <div class="card-footer d-flex align-item-center justify-content-between">
+                          Total: <?php echo $mensajesPendientes; ?>
+                        <a href="<?php /* Aquí la URL para ver detalles */ ?>" class="text-white">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card bg-danger">
+                        <div class="card-body d-flex align-item-center justify-content-between">
+                            recordatorios     
+                            <i class="bi bi-calendar-event-fill"></i>
+                        </div>
+                        <div class="card-footer d-flex align-item-center justify-content-between"> 
+                            Total: <?php echo $recordatoriosPendientes; ?>
+                        <a href="<?php /* URL para ver detalles */ ?>" class="text-white">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card bg-warning">
+                        <div class="card-body d-flex align-item-center justify-content-between">
+                            mascotas totales
+                            <i class="bi bi-file-earmark-bar-graph"></i>
+                        </div>
+                        <div class="card-footer d-flex align-item-center justify-content-between">
+                        <span><?php echo $totalMascotas; ?></span>
+                        <a href="<?php /* Agrega el enlace para ver detalles */ ?>" class="text-white">ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card bg-warning">
+                        <div class="card-body d-flex align-item-center justify-content-between">
+                            mensajes atendidos
+                            <i class="bi bi-chat-dots"></i>
+                        </div>
+                        <div class="card-footer d-flex align-item-center justify-content-between">
+                        <span><?php echo $totaMensajesAtendidos ; ?></span>
+                        <a href="<?php /* Agrega el enlace para ver detalles */ ?>" class="text-white">ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card bg-warning">
+                        <div class="card-body d-flex align-item-center justify-content-between">
+                            total mensajes
+                            <i class="bi bi-chat-right-heart-fill"></i>
+                        </div>
+                        <div class="card-footer d-flex align-item-center justify-content-between">
+                        <span><?php echo $totaMensajes; ?></span>
+                        <a href="<?php /* Agrega el enlace para ver detalles */ ?>" class="text-white">ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-
-
-
+        </div>
+    </section>
 
     <div class="container-fluid d-flex flex-column min-vh-100">
         <!-- Contenido principal -->

@@ -26,37 +26,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Mover la imagen a la carpeta de destino
         if (move_uploaded_file($imagen_temp, $carpeta_destino . $imagen_nombre)) {
             // La imagen se ha subido correctamente
-
-            try {
-                // Crear una instancia de la clase conexionLogin
-                $conexion = new conexionLogin();
-
-                // Conectarse a la base de datos
-                $pdo = $conexion->conectar();
-
-                // Preparar la consulta SQL para actualizar los datos del cliente
-                $stmt = $pdo->prepare("UPDATE cliente SET nombre=?, telefono=?, correo=?, documento=?, direccion=?, imagen_perfil=? WHERE idusuario=?");
-
-                // Ejecutar la consulta con los datos del formulario
-                $stmt->execute([$nombre, $telefono, $correo, $documento, $direccion, $imagen_nombre, $idcliente]);
-
-                $conexion->desconectar();         
-                $response['exito'] = true;
-                $response['mensaje'] = 'Los datos se han actualizado correctamente.';
-            } catch (PDOException $e) {
-                // Mostrar un mensaje de error si hay un problema con la base de datos
-                $response['exito'] = false;
-                $response['mensaje'] = 'Error al actualizar los datos en la base de datos: ' . $e->getMessage();
-            }
+            $imagen_actualizada = $imagen_nombre; // Guardar el nombre de la imagen actualizada
         } else {
             // Error al mover la imagen
             $response['exito'] = false;
             $response['mensaje'] = 'Error al subir la imagen.';
+            echo json_encode($response);
+            exit; // Detener la ejecución del script
         }
-    } else {
-        // No se ha subido ninguna imagen
+    }
+
+    try {
+        // Crear una instancia de la clase conexionLogin
+        $conexion = new conexionLogin();
+
+        // Conectarse a la base de datos
+        $pdo = $conexion->conectar();
+
+        // Preparar la consulta SQL para actualizar los datos del cliente
+        if (isset($imagen_actualizada)) {
+            $stmt = $pdo->prepare("UPDATE cliente SET nombre=?, telefono=?, correo=?, documento=?, direccion=?, imagen_perfil=? WHERE idusuario=?");
+            $stmt->execute([$nombre, $telefono, $correo, $documento, $direccion, $imagen_actualizada, $idcliente]);
+        } else {
+            $stmt = $pdo->prepare("UPDATE cliente SET nombre=?, telefono=?, correo=?, documento=?, direccion=? WHERE idusuario=?");
+            $stmt->execute([$nombre, $telefono, $correo, $documento, $direccion, $idcliente]);
+        }
+
+        $conexion->desconectar();         
+        $response['exito'] = true;
+        $response['mensaje'] = 'Los datos se han actualizado correctamente.';
+    } catch (PDOException $e) {
+        // Mostrar un mensaje de error si hay un problema con la base de datos
         $response['exito'] = false;
-        $response['mensaje'] = 'Error: No se ha subido ninguna imagen.';
+        $response['mensaje'] = 'Error al actualizar los datos en la base de datos: ' . $e->getMessage();
     }
 } else {
     // Método de solicitud incorrecto

@@ -1,21 +1,22 @@
 <?php
 require_once ('template.php');
-
+require_once('php/Conexion_BD.php'); // Incluir el archivo de conexión
 // Verificar si se proporcionó un ID de cliente en la URL
 if (empty($_GET['id'])) {
     header('Location: usuarios.php');
     exit; // Detener la ejecución del script
 }
-
 // Obtener el ID del cliente de la URL
 $idCliente = $_GET["id"];
+// Crear una instancia de la conexión a la base de datos
+$conexion = new conexionLogin();
+$db = $conexion->conectar();
 
-// Realizar la consulta para obtener los detalles del cliente con el ID proporcionado
-$conexion = new PDO("mysql:host=localhost;dbname=login_register","root","");
-$stament = $conexion->prepare("SELECT * FROM cliente WHERE idusuario = :id");
-$stament->bindParam(':id', $idCliente);
-$stament->execute();
-$cliente = $stament->fetch(PDO::FETCH_ASSOC);
+// Preparar y ejecutar la consulta para obtener los detalles del cliente
+$statement = $db->prepare("SELECT * FROM cliente WHERE idusuario = :id");
+$statement->bindParam(':id', $idCliente);
+$statement->execute();
+$cliente = $statement->fetch(PDO::FETCH_ASSOC);
 
 // Verificar si se encontró el cliente
 if (!$cliente) {

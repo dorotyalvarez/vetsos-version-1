@@ -218,17 +218,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
       <div class="modal-body">
         <!-- Formulario para ingresar texto -->
-        <form id="recordatorioForm" action="controllers/recordatorio.php" method="post">
+        <form id="recordatorioForm" action="consultas/recordatorio.php" method="post">
           <!-- Campo oculto para el ID de la mascota -->
           <input type="hidden" id="idMascota" name="idMascota" value="<?php echo $id2; ?>">
           <div class="mb-3">
             <label for="textoRecordatorio" class="form-label">Texto del recordatorio:</label>
-            <textarea class="form-control" id="textoRecordatorio" name="textoRecordatorio" rows="3"></textarea>
+            <textarea class="form-control" id="textoRecordatorio" name="textoRecordatorio" rows="3" required></textarea >
           </div>
           <div class="mb-3">
             <label for="fechaVencimiento" class="form-label">Fecha de vencimiento:</label>
-            <input type="date" class="form-control" id="fechaVencimiento" name="fechaVencimiento">
+            <input type="date" class="form-control" id="fechaVencimiento" name="fechaVencimiento" required>
           </div>
+          <div class="form-group">
+                            <label for="nombre">nombre dueño:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
 
           <!-- Botón para enviar el formulario -->
           <button type="submit" class="btn btn-primary" id="guardarRecordatorioBtn">Guardar</button>
@@ -254,7 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       var formData = new FormData(this);
 
       // Realizar una solicitud AJAX para enviar el formulario
-      fetch('controllers/recordatorio.php', {
+      fetch('consultas/recordatorio.php', {
           method: 'POST',
           body: formData
         })

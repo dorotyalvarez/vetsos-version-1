@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
     $especie = $_POST['especie'];
     $raza = $_POST['raza'];
-    $dueño = $_POST['documentos']; // Modificado el nombre del campo 'dueño' a 'documento' según tu formulario
+    $dueño = $_POST['documento']; // Corregido el nombre del campo 'documentos' a 'documento' según el formulario proporcionado
     $peso = $_POST['peso'];
     $sexo = $_POST['sexo'];
     $color = $_POST['color'];

@@ -7,6 +7,13 @@ if(empty($_SESSION['active'])){
 }
 error_reporting(E_ALL);
 require_once('../funtion/scripts.php');
+require_once(__DIR__ . '/../consultas/notificaciones.php'); // asi es como se debe llamar los archivos en otras carpetas
+require_once(__DIR__ . '/../consultas/estadistica.php');
+$clientesActivos = obtenerClientesActivos();
+$citasAtendidas = obtenerCitasAtendidas();
+$citasPendientes = obtenerCitasPendientes();
+
+$recordatorios = consultarRecordatorios();
 
 
 ?>
@@ -164,85 +171,43 @@ require_once('../funtion/scripts.php');
 					</div>
 				</div>
 				<div class="user-notification">
-					<div class="dropdown">
-						<a
-							class="dropdown-toggle no-arrow"
-							href="#"
-							role="button"
-							data-toggle="dropdown"
-						>
-							<i class="icon-copy dw dw-notification"></i>
-							<span class="badge notification-active"></span>
-						</a>
+    <div class="dropdown">
+        <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
+            <i class="icon-copy dw dw-notification"></i>
+            <span class="badge notification-active"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+            <div class="notification-list mx-h-350 customscroll">
+                <ul>
+                    <?php
+                    // Llamamos a la función para obtener los recordatorios
+                    $recordatorios = consultarRecordatorios();
 
-						<div class="dropdown-menu dropdown-menu-right">
-							<div class="notification-list mx-h-350 customscroll">
-								<ul>
-									<li>
-										<a href="#">
-											<img src="../vendors/images/img.jpg" alt="" />
-											<h3>John Doe</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="../vendors/images/photo1.jpg" alt="" />
-											<h3>Lea R. Frith</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="../vendors/images/photo2.jpg" alt="" />
-											<h3>Erik L. Richards</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="../vendors/images/photo3.jpg" alt="" />
-											<h3>John Doe</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="../vendors/images/photo4.jpg" alt="" />
-											<h3>Renee I. Hansen</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="../vendors/images/img.jpg" alt="" />
-											<h3>Vicki M. Coleman</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
+                    // Verificamos si hay recordatorios disponibles
+                    if ($recordatorios !== null && count($recordatorios) > 0) {
+                        // Iteramos sobre los recordatorios y los mostramos en la lista
+                        foreach ($recordatorios as $recordatorio) {
+                            echo '<li>';
+                            echo '<a href="#">';
+                            echo '<img src="../vendors/images/icons8-recordatorios-de-citas.gif" alt="" />';
+							echo '<h3> Mascota :' . $recordatorio['NombreMascota'] . '</h3>';
+                            echo '<h3> Cliente :' . $recordatorio['nombre'] . '</h3>';
+							echo '<p style="color: red;" > vence: ' . $recordatorio['fechaVencimiento'] . '</p>';
+                            echo '<p> Mensaje :' . $recordatorio['textoRecordatorio'] . '</p>';
+                            echo '<p> Fecha :' . $recordatorio['fechaCreacion'] . '</p>';
+                            echo '</a>';
+                            echo '</li>';
+                        }
+                    } else {
+                        // Si no hay recordatorios, mostramos un mensaje indicando que no hay ninguno
+                        echo '<li>No hay recordatorios disponibles</li>';
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 				<div class="user-info-dropdown">
 					<div class="dropdown">
 						<a
@@ -252,7 +217,7 @@ require_once('../funtion/scripts.php');
 							data-toggle="dropdown"
 						>
 							<span class="user-icon">
-								<img src="../vendors/images/photo1.jpg" alt="" />
+								<img src="../vendors/images/8454452.png" alt="" />
 							</span>
 							<span class="user-name"><?php echo $_SESSION['nombre'];?></span>
 						</a>
@@ -408,8 +373,8 @@ require_once('../funtion/scripts.php');
             <div class="left-side-bar">   
                 <div class="brand-logo">
                     <a href="index.php">
-                        <img src="../vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
-                        <img src="../vendors/images/deskapp-logo-white.svg" alt="" class="light-logo" />
+                        <img src="../vendors/images/untitled1.svg" alt="" class="dark-logo" />
+                        <img src="../vendors/images/untitled2.svg" alt="" class="light-logo" />
                     </a>
                     <div class="close-sidebar" data-toggle="left-sidebar-close">
                         <i class="ion-close-round"></i>
@@ -426,34 +391,6 @@ require_once('../funtion/scripts.php');
 
                             </li>
                          
-                       
-                            <li>
-                                <a href="../calendar.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-calendar4-week"></span
-								><span class="mtext">Calendario</span>
-                                </a>
-                            </li>
-                           
-
-                            <li class="dropdown">
-                                <a href="../doctores.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-pie-chart"></span
-								><span class="mtext">Doctores</span>
-                                </a>
-
-                            </li>
-                            <li class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle">
-                                    <span class="micon bi bi-file-earmark-text"></span
-								><span class="mtext">Opciones Adicionales</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li><a href="../login.php">Login</a></li>
-                                    <li><a href="forgot-password.html">Forgot Password</a></li>
-                                    <li><a href="reset-password.html">Reset Password</a></li>
-                                </ul>
-                            </li>
-
                             <li>
                                 <a href="citas_programadas.php" class="dropdown-toggle no-arrow">
                                     <span class="micon bi bi-diagram-3"></span
@@ -472,31 +409,175 @@ require_once('../funtion/scripts.php');
                 </div>
             </div>
             <div class="mobile-menu-overlay"></div>
+            <style>
+  /* Estilos para el título */
+  .custom-title {
+    text-align: center;
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    font-size: 24px; 
+    color: #333;
+    border-bottom: 2px solid #ccc; 
+    padding-bottom: 10px; 
+  }
+  .custom-title:hover {
+    color: #666; /* Cambio de color del texto al pasar el cursor */
+    border-bottom-color: #666; /* Cambio de color de la línea inferior al pasar el cursor */
+  }
+</style>
+
+            <section class="d-flex justify-content-between" style="margin-top: 80px;">
+        <div class="container-fluid">
+            <h2 class="custom-title">Informacion de la semana</h2>
+        </div>
+    </section>
+
+    <style>
+    .custom-card {
+        margin-bottom: 20px; /* Margen inferior */
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+        transition: box-shadow 0.3s ease; /* Transición suave de la sombra */
+    }
+
+    .custom-card:hover {
+        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada al pasar el mouse */
+    }
+
+    .custom-card .card-body {
+        padding: 20px; /* Espaciado interno */
+    }
+
+    .custom-card .card-footer {
+        padding: 10px 20px; /* Espaciado interno */
+    }
+</style>
+<style>
+    /* Estilos para el enlace "Ver detalles" */
+    .ver-detalles {
+        color: #ffffff; /* Color del texto */
+        text-decoration: none; /* Sin subrayado */
+        font-weight: bold; /* Negrita */
+        font-size: 14px; /* Tamaño de fuente */
+        transition: color 0.3s ease; /* Transición suave del color */
+    }
+
+    .ver-detalles:hover {
+        color: #f8f9fa; /* Cambio de color al pasar el mouse */
+    }
+</style>
+
+<section class="d-flex justify-content-between">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-2">.</div>
+            <div class="col-md-3">
+                <div class="card bg-success custom-card">
+                    <div class="card-body d-flex align-item-center justify-content-between">
+                        usuarios
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <div class="card-footer d-flex align-item-center justify-content-between">
+                        Total: <?php echo $clientesActivos; ?>
+                        <a href="<?php /* Aquí la URL para ver detalles */ ?>" class="text-white">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-info custom-card">
+                    <div class="card-body d-flex align-item-center justify-content-between">
+                        citas Atendidas     
+                        <i class="bi bi-calendar-event-fill"></i>
+                    </div>
+                    <div class="card-footer d-flex align-item-center justify-content-between"> 
+                        Total: <?php echo $citasAtendidas; ?>
+                        <a href="cita_atendidas.php" class="ver-detalles">ver detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning custom-card">
+                    <div class="card-body d-flex align-item-center justify-content-between">
+                        citas pendiente
+                        <i class="bi bi-bank"></i>
+                    </div>
+                    <div class="card-footer d-flex align-item-center justify-content-between">
+                        <span><?php echo obtenerCitasPendientes(); ?></span>
+                        <a href="citas_programadas.php" class="ver-detalles">ver detalles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <section class="d-flex justify-content-between">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-2">.</div>
+            <div class="col-md-3">
+                <div class="card" style="background-color: #14E0F1;">
+                    <div class="card-body d-flex align-item-center justify-content-between">
+                        <img src="tumblr_n1cdbyyJHv1ste05mo1_500.gif" alt="Usuarios" style="border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); width: 100%; height: 200px;" /> 
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="background-color: #F7F708;">
+                    <div class="card-body d-flex align-item-center justify-content-between">
+                        <div class="card-body d-flex align-item-center justify-content-between">
+                            <img src="VETERINARIOS.gif" alt="Usuarios" style="border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); width: 100%; height: 200px;" /> 
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" style="background-color: #B62A50;">
+                    <div class="card-body d-flex align-item-center justify-content-between">
+                        <img src="giphy.gif" alt="Citas pendientes" style="border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); width: 100%; height: 200px;" /> <!-- Imagen para citas pendientes -->
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 
 
 
             <!-- dividir aqui -->
 
+<div class="container-fluid d-flex flex-column min-vh-100">
+        <!-- Contenido principal -->
+        <div class="row flex-grow-1">
+            <div class="col">
+                <div class="title pb-20 pt-20">
+                    <h2 class="h3 mb-0">.</h2>
+                </div>
+            </div>
+        </div>
 
+        <!-- Footer -->
+        <div class="row">
+            <div class="col">
+                <div class="footer-wrap bg-light">
+                    <div class="card-footer text-muted text-center">
+                        veterinaria sos todos los derechos reservados
+                        <a href="https://github.com/dorotyalvarez" target="_blank">VETERINARIA SOS</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
             <div class="main-container">
 
 
 
-                <!-- dividir aqui -->
-
-
-                <div class="title pb-20 pt-20">
-                    <h2 class="h3 mb-0">doctor</h2>
-                </div>
-
-                <div class="footer-wrap pd-20 mb-20 card-box">
-                    veterinaria sos todos los derechos reservados
-                    <a href="https://github.com/dorotyalvarez" target="_blank">VETERINARIA SOS</a
-					>
-				</div>
-			</div>
-		</div>
 		<!-- welcome modal start -->
 		<div class="welcome-modal">
 			<button class="welcome-modal-close">

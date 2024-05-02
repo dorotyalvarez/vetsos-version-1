@@ -1,10 +1,44 @@
 <?php
+
+// Función para redireccionar a la página de error correspondiente
+function redirectToErrorPage($errorCode) {
+    // Determina la página de error correspondiente según el código de error
+    $errorPages = [
+        400 => '400.html',
+        403 => '403.html',
+        404 => '404.html',
+        500 => '500.html',
+        503 => '503.html'
+    ];
+
+    // Verifica si el código de error está definido en el array
+    if (array_key_exists($errorCode, $errorPages)) {
+        // Redirecciona a la página de error correspondiente
+        header('Location: ' . $errorPages[$errorCode]);
+        exit; // Detiene la ejecución del script después de redireccionar
+    } else {
+        // En caso de un código de error no reconocido, redirecciona a una página de error genérica
+        header('Location: error.html');
+        exit;
+    }
+}
+
+// Verifica si se ha producido un error y redirige a la página de error correspondiente
+if (isset($_GET['error'])) {
+    $errorCode = $_GET['error'];
+    redirectToErrorPage($errorCode);
+}
+
+?>
+<?php
 session_start();
 if(empty($_SESSION['active'])){
 	header( "location: login.php" );  //redirect to dashboard if user is already logged in
 }
 error_reporting(E_ALL);
+require_once(__DIR__ . '../consultas/notificaciones.php');
 
+$recordatorios = consultarRecordatorios();
 
 function Head($title){
 ob_start();
@@ -76,7 +110,17 @@ function starBody(){
 	
     ob_start();
 ?>
-
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            /*background-image: url('4.jpg');*/
+            background: linear-gradient(to bottom, #F0F8FF, #90EE90, #FFD700);
+background-size: cover;
+background-repeat: no-repeat;
+        }
+    </style>
 <body>
 	<!-- para cargar tablas y  demas sin que se vean los loading -->
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -168,84 +212,43 @@ function starBody(){
 					</div>
 				</div>
 				<div class="user-notification">
-					<div class="dropdown">
-						<a
-							class="dropdown-toggle no-arrow"
-							href="#"
-							role="button"
-							data-toggle="dropdown"
-						>
-							<i class="icon-copy dw dw-notification"></i>
-							<span class="badge notification-active"></span>
-						</a>
-						<div class="dropdown-menu dropdown-menu-right">
-							<div class="notification-list mx-h-350 customscroll">
-								<ul>
-									<li>
-										<a href="#">
-											<img src="vendors/images/img.jpg" alt="" />
-											<h3>John Doe</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="vendors/images/photo1.jpg" alt="" />
-											<h3>Lea R. Frith</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="vendors/images/photo2.jpg" alt="" />
-											<h3>Erik L. Richards</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="vendors/images/photo3.jpg" alt="" />
-											<h3>John Doe</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="vendors/images/photo4.jpg" alt="" />
-											<h3>Renee I. Hansen</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="vendors/images/img.jpg" alt="" />
-											<h3>Vicki M. Coleman</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
+    <div class="dropdown">
+        <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
+            <i class="icon-copy dw dw-notification"></i>
+            <span class="badge notification-active"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+            <div class="notification-list mx-h-350 customscroll">
+                <ul>
+                    <?php
+                    // Llamamos a la función para obtener los recordatorios
+                    $recordatorios = consultarRecordatorios();
+
+                    // Verificamos si hay recordatorios disponibles
+                    if ($recordatorios !== null && count($recordatorios) > 0) {
+                        // Iteramos sobre los recordatorios y los mostramos en la lista
+                        foreach ($recordatorios as $recordatorio) {
+                            echo '<li>';
+                            echo '<a href="#">';
+                            echo '<img src=" vendors/images/icons8-recordatorios-de-citas.gif" alt="" />';
+							echo '<h3> Mascota :' . $recordatorio['NombreMascota'] . '</h3>';
+                            echo '<h3> Cliente :' . $recordatorio['nombre'] . '</h3>';
+							echo '<p style="color: red;" > vence: ' . $recordatorio['fechaVencimiento'] . '</p>';
+                            echo '<p> Mensaje :' . $recordatorio['textoRecordatorio'] . '</p>';
+                            echo '<p> Fecha :' . $recordatorio['fechaCreacion'] . '</p>';
+                            echo '</a>';
+                            echo '</li>';
+                        }
+                    } else {
+                        // Si no hay recordatorios, mostramos un mensaje indicando que no hay ninguno
+                        echo '<li>No hay recordatorios disponibles</li>';
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 				<div class="user-info-dropdown">
 					<div class="dropdown">
 						<a
@@ -255,7 +258,7 @@ function starBody(){
 							data-toggle="dropdown"
 						>
 							<span class="user-icon">
-								<img src="vendors/images/photo1.jpg" alt="" />
+								<img src="vendors/images/1876759.png" alt="" />
 							</span>
 							<span class="user-name"><?php echo $_SESSION['nombre'];?></span>
 						</a>
@@ -415,8 +418,8 @@ function starBody(){
             <div class="left-side-bar">   
                 <div class="brand-logo">
                     <a href="index.php">
-                        <img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
-                        <img src="vendors/images/deskapp-logo-white.svg" alt="" class="light-logo" />
+                        <img src="vendors/images/untitled1.svg" alt="" class="dark-logo" />
+                        <img src="vendors/images/untitled2.svg" alt="" class="light-logo" />
                     </a>
                     <div class="close-sidebar" data-toggle="left-sidebar-close">
                         <i class="ion-close-round"></i>
@@ -432,13 +435,7 @@ function starBody(){
                                 </a>
 
                             </li>
-                            <li class="dropdown">
-                                <a href="estadistica.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-textarea-resize"></span
-								><span class="mtext">Estadistica</span>
-                                </a>
-
-                            </li>
+                           
                             <li class="dropdown">
                                 <a href="usuarios.php" class="dropdown-toggle no-arrow">
                                     <span class="micon bi bi-archive"></span
@@ -467,17 +464,7 @@ function starBody(){
                                 </a>
 
                             </li>
-                            <li class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle">
-                                    <span class="micon bi bi-file-earmark-text"></span
-								><span class="mtext">Opciones Adicionales</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li><a href="login.php">Login</a></li>
-                                    <li><a href="forgot-password.html">Forgot Password</a></li>
-                                    <li><a href="reset-password.html">Reset Password</a></li>
-                                </ul>
-                            </li>
+                         
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle">
                                     <span class="micon bi bi-bug"></span
@@ -490,14 +477,6 @@ function starBody(){
                                     <li><a href="500.html">500</a></li>
                                     <li><a href="503.html">503</a></li>
                                 </ul>
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="blank.html" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-back"></span
-								><span class="mtext">Extra Pages</span>
-                                </a>
-
                             </li>
 
                             <li>
