@@ -24,9 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Mover la imagen a la carpeta de destino
         if (move_uploaded_file($imagen_temp, $carpeta_destino . $imagen_nombre)) {
-            // La imagen se ha subido correctamente
-            // Ahora, en lugar de guardar la ruta completa, guardaremos solo el nombre de la imagen en la base de datos
-
             try {
                 // Crear una instancia de la clase conexionLogin
                 $conexion = new conexionLogin();
@@ -40,9 +37,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Ejecutar la consulta con los datos del formulario
                 $stmt->execute([$nombre, $telefono, $correo, $documento, $direccion, $imagen_nombre]); // Guardar el nombre de la imagen en lugar de la ruta completa
 
+                // Obtener el ID del último registro insertado
+                $ultimo_id = $pdo->lastInsertId();
+
                 $conexion->desconectar();         
                 $response['exito'] = true;
                 $response['mensaje'] = 'Los datos se han guardado correctamente.';
+                $response['id_registro'] = $ultimo_id; // Añadir el ID del registro al array de respuesta
             } catch (PDOException $e) {
                 // Mostrar un mensaje de error si hay un problema con la base de datos
                 $response['exito'] = false;
@@ -66,4 +67,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Devolver una respuesta JSON
 echo json_encode($response);
+
 ?>

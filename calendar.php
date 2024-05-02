@@ -1,8 +1,17 @@
 <?php
 require_once('template.php');
+// Renombrar los parámetros de consulta, pero solo si no están ya asignados
+$id1 = isset($_GET['id_cliente']) ? $_GET['id_cliente'] : '';
+$id2 = isset($_GET['id_mascota']) ? $_GET['id_mascota'] : '';
 
-$id1 = isset($_GET['id1']) ? $_GET['id1'] : '';
-$id2 = isset($_GET['id2']) ? $_GET['id2'] : '';
+// Solo sobrescribir si los parámetros 'id1' e 'id2' están presentes y no están vacíos
+if (isset($_GET['id1']) && $_GET['id1'] !== '') {
+    $id1 = $_GET['id1'];
+}
+if (isset($_GET['id2']) && $_GET['id2'] !== '') {
+    $id2 = $_GET['id2'];
+}
+
 require_once 'php/Conexion_BD.php';
 
 $conexion = new conexionLogin();
@@ -116,14 +125,24 @@ $resultado_mascota = $statement_mascota->fetch(PDO::FETCH_ASSOC);
 </script>
 
 <?= starBody() ?>
-<h2>Reservar cita </h2>
+<style>  .custom-title {
+    text-align: center;
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    font-size: 24px; 
+    color: #333;
+    border-bottom: 2px solid #ccc; 
+    padding-bottom: 10px; 
+  }
+  .custom-title:hover {
+    color: #666; /* Cambio de color del texto al pasar el cursor */
+    border-bottom-color: #666; /* Cambio de color de la línea inferior al pasar el cursor */
+  }
+</style>
+
+<!-- HTML con el título personalizado -->
+<center><h2 class="custom-title">Reservar Cita</h2></center>
 <div id='calendar'></div>
-
-
-
-
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="modal_reservas" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -189,14 +208,14 @@ $resultado_mascota = $statement_mascota->fetch(PDO::FETCH_ASSOC);
             </div>
             <div class="col-md-6">
               <label for="title">actividad</label>
-              <input type="text" name="title" class="form-control" id="title">
+              <input type="text" name="title" class="form-control" id="title" required>
             </div>
 
           </div>
           <br>
           <div class="row">
             <div class="col-md-6">
-              <label for="servicio">Servicio</label>
+              <label for="servicio" >Servicio</label>
               <select id="servicio" name="servicio" class="form-control">
                 <option value="1">Cita clínica</option>
                 <option value="2">Cita belleza</option>

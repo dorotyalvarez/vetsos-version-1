@@ -74,8 +74,7 @@ $reservas = $statement->fetchAll(PDO::FETCH_ASSOC);
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                         <a ><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#citaModal"><i class="bi bi-eye-fill"></i>Ver</button></a>
                                          <a href="update.php?id_cita=<?php echo $reserva['id'];?>" type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i> Editar</a>
-                                         
-
+                                    
                                         </div>
                                     </td>
                                 </tr>
@@ -84,22 +83,11 @@ $reservas = $statement->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             </tbody>
                         </table>
-
-                        <br><br>
-
-
                     </div>
                 </div>
             </div>
         </div>
-
-
-
     </div>
-
-
-
-
 <script>
     $(function () {
         $("#example1").DataTable({

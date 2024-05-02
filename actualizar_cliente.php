@@ -45,81 +45,95 @@ $clienteArray = array(
 <html lang="en">
 <?= Head('Actualizar Cliente') ?>
 <?= starBody() ?>
+<style>  .custom-title {
+    text-align: center;
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    font-size: 24px; 
+    color: #333;
+    border-bottom: 2px solid #ccc; 
+    padding-bottom: 10px; 
+  }
+  .custom-title:hover {
+    color: #666; /* Cambio de color del texto al pasar el cursor */
+    border-bottom-color: #666; /* Cambio de color de la línea inferior al pasar el cursor */
+  }
+</style>
 
-<div class="mt-3 text-right">
-    <button onclick="window.location.href = 'editar.php'" class="btn btn-secondary">Volver a Usuarios</button>
-</div>
+<!-- HTML con el título personalizado -->
+<center><h2 class="custom-title">Editar Cliente</h2></center>
 
-<h1>Editar Cliente - ID: <?php echo $idCliente; ?></h1>
-
-                          <!-- Sección de la imagen -->
-        <div class="row justify-content-center">
-            <div class="card">
-                <div class="mt-3">
-                    <?php 
-                    // Ruta del directorio donde se guardan las imágenes
-                    $ruta_imagen = 'imgclientes/' . $clienteArray['imagen_perfil']; 
-                    ?>
-                    <img id="imagen-preview" src="<?php echo $ruta_imagen; ?>" alt="Imagen de perfil" class="img-thumbnail" style="max-width: 100%; max-height: 200px;">
+<section>
+    <div class="container">
+    <div class="col-md-4">
+<button onclick="window.location.href = 'usuarios.php'" class="btn btn-outline-warning">Volver a Cliente</button>
+   </div>
+        <div class="row mt-4">
+            <!-- Tarjeta para la imagen de perfil -->
+            <div class="col-md-3">
+                <div class="card border-dark mb-3">
+                    <div class="card-body text-center">
+                        <?php 
+                        // Ruta del directorio donde se guardan las imágenes
+                        $ruta_imagen = 'imgclientes/' . $clienteArray['imagen_perfil']; 
+                        ?>
+                        <img id="imagen-preview" src="<?php echo $ruta_imagen; ?>" alt="Imagen de perfil" class="img-thumbnail" style="max-width: 100%; max-height: 200px;">
+                        <h5 class="card-title">Imagen de perfil</h5>
+                        <p class="card-text">Última Modificación: <?php echo $clienteArray['fecha_actualizado']; ?></p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">Imagen de perfil</h5>
-                    <p>Última Modificación: <?php echo $clienteArray['fecha_actualizado']; ?></p>
-                    <p>ubicacion de la imagen: <?php echo($ruta_imagen); ?></p>
+            </div>
+            <!-- Tarjeta para los otros campos -->
+            <div class="col-md-9">
+                <div class="card border-dark mb-3">
+                    <div class="card-body">
+                        <form id="formulario" class="row g-3" method="post" action="" enctype="multipart/form-data">
+                            <!-- Columna para los otros campos -->
+                            <input type="hidden" name="idusuario" id="idusuario" value="<?php echo $clienteArray['idusuario']; ?>">
+                            <div class="col-md-4">
+                                <label for="nombre" class="form-label">Nombre completo:</label>
+                                <input type="text" name="usuario" id="usuario" class="form-control form-control-lg" placeholder="Nombre completo" value="<?php echo $clienteArray['nombre']; ?>" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="telefono" class="form-label">Teléfono:</label>
+                                <input type="number" name="telefono" id="telefono" class="form-control form-control-lg" placeholder="Teléfono" value="<?php echo $clienteArray['telefono']; ?>" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="correo" class="form-label">Correo:</label>
+                                <input type="email" name="correo" id="correo" class="form-control form-control-lg" placeholder="Correo electrónico" value="<?php echo $clienteArray['correo']; ?>" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="documento" class="form-label">Documento:</label>
+                                <input type="number" name="documento" id="documento" class="form-control form-control-lg" placeholder="Documento" value="<?php echo $clienteArray['documento']; ?>" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="direccion" class="form-label">Dirección:</label>
+                                <input type="text" name="direccion" id="direccion" class="form-control form-control-lg" placeholder="Dirección" value="<?php echo $clienteArray['direccion']; ?>" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="imagen" class="form-label">Imagen:</label>
+                                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+                                <div class="mt-3">
+                                    
+                                </div>
+                            </div>
+                            <div class="col mt-4">
+                                <div class="row justify-content-between">
+                                    <div class="col-md-6">
+                                        <button id="btnGuardar" type="submit" class="btn btn-outline-success btn-block">Actualizar Datos</button>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            
+                        </form>
+                        <div id="mensaje"></div>
+                    </div>
                 </div>
             </div>
         </div>
-            
- <div class="container">
-         <form id="formulario" class="row g-3" method="post" action="" enctype="multipart/form-data">
-            <!-- Columna para la imagen -->
-            <div class="col-md-4">
-                <label for="imagen" class="form-label">Imagen:</label>
-                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
-                <div class="mt-3">
-                    <img id="imagen-preview" src="#" alt="Preview de la imagen" class="img-thumbnail" style="max-width: 100%; max-height: 200px;">
-                </div>
-            </div>
-          
-            <!-- Columna para los otros campos -->
-            <input type="hidden" name="idusuario" id="idusuario"  value="<?php echo $clienteArray['idusuario']; ?>" >
-            <div class="col-md-8">
-                <div class="col-8">
-                    <label for="nombre" class="form-label">Nombre completo:</label>
-                    <input type="text" name="usuario" id="usuario" class="form-control form-control-lg" placeholder="Nombre completo" value="<?php echo $clienteArray['nombre']; ?>" required >
-                </div>
-                <div class="col-8">
-                    <label for="telefono" class="form-label">Teléfono:</label>
-                    <input type="text" name="telefono" id="telefono" class="form-control form-control-lg" placeholder="Teléfono" value="<?php echo $clienteArray['telefono']; ?>" required>
-                </div>
-                <div class="col-8">
-                    <label for="correo" class="form-label">Correo:</label>
-                    <input type="email" name="correo" id="correo" class="form-control form-control-lg" placeholder="Correo electrónico" value="<?php echo $clienteArray['correo']; ?>" required>
-                </div>
-                <div class="col-8">
-                    <label for="documento" class="form-label">Documento:</label>
-                    <input type="text" name="documento" id="documento" class="form-control form-control-lg" placeholder="Documento" value="<?php echo $clienteArray['documento']; ?>" required>
-                </div>
-                <div class="col-8">
-                    <label for="direccion" class="form-label">Dirección:</label>
-                    <input type="text" name="direccion" id="direccion" class="form-control form-control-lg" placeholder="Dirección" value="<?php echo $clienteArray['direccion']; ?>" required>
-                </div>
-                <div>
-                    <br></br>
-                </div>
-                <div class="row justify-content-between">
-                     <div class="col-md-3">
-                       <button id="btnGuardar" type="submit" class="btn btn-success btn-block">Actualizar Datos</button>
-                  </div>
-                  <div class="col-md-3">
-                  <button onclick="window.location.href = 'cliente.php'" class="btn btn-secondary">Volver a Cliente</button>
-                  </div>
-               </div>
-
-                <div id="mensaje"></div>
-            </div>
-        </form>
     </div>
+</section>
 
 <script>
     document.getElementById("btnGuardar").addEventListener("click", function(event) {

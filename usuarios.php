@@ -13,7 +13,29 @@ $clientes=$stament->fetchAll();
 <?= Head('usuario') ?>
 
 <?= starBody() ?>
+<style>
+  /* Estilos para el título */
+  .custom-title {
+    text-align: center;
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    font-size: 24px; 
+    color: #333;
+    border-bottom: 2px solid #ccc; 
+    padding-bottom: 10px; 
+  }
 
+  
+  .custom-title:hover {
+    color: #666; /* Cambio de color del texto al pasar el cursor */
+    border-bottom-color: #666; /* Cambio de color de la línea inferior al pasar el cursor */
+  }
+</style>
+
+<!-- HTML con el título personalizado -->
+<center><h2 class="custom-title">Clientes Activos</h2></center>
+
+<div class="card">
     <div>
     <br>
     <!-- Botón desplegable con Bootstrap -->
@@ -28,10 +50,10 @@ $clientes=$stament->fetchAll();
         </div>
     </div>
 </div>
-<div>
-<h3 id="tituloVista">Vista de clientes activos</h3>
+<center><div>
+<h3 id="tituloVista text-center">Vista de clientes activos</h3>
     <br>
-</div>
+</div></center>
 
 <div id="clientesTableContainer">
     <table id="clientesTable" class="display">
@@ -68,7 +90,7 @@ $clientes=$stament->fetchAll();
         
     </table>
 </div>
-
+</div
 <div id="listaMascotasContainer" style="display:none;"></div>
 <script src="funtion/mascotas.js"></script>
 <script>

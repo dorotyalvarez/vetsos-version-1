@@ -23,14 +23,26 @@ $reservas = $statement->fetchAll(PDO::FETCH_ASSOC);
 <?=Head('citas')?>
 <?=starBody()?>
 
-<h1>Citas</h1>
+<style>  .custom-title {
+    text-align: center;
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    font-size: 24px; 
+    color: #333;
+    border-bottom: 2px solid #ccc; 
+    padding-bottom: 10px; 
+  }
+  .custom-title:hover {
+    color: #666; /* Cambio de color del texto al pasar el cursor */
+    border-bottom-color: #666; /* Cambio de color de la línea inferior al pasar el cursor */
+  }
+</style>
 
-
+<!-- HTML con el título personalizado -->
+<center><h2 class="custom-title">Citas Pendientes</h2></center>
 
     <br>
     <div class="container-fluid">
-        <h1>Listado de citas Pendientes</h1>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-outline card-primary">

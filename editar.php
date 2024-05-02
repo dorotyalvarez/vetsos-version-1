@@ -22,7 +22,6 @@ if (!$cliente) {
     echo "No se encontró ningún cliente con el ID proporcionado.";
     exit; // Detener la ejecución del script
 }
-
 // Convertir los detalles del cliente en un array
 $clienteArray = array(
     'idusuario' => $cliente['idusuario'],
@@ -36,10 +35,8 @@ $clienteArray = array(
     'active' => $cliente['active'],
     'imagen_perfil' => $cliente['imagen_perfil']
 );
-
 ?>
 <?php
-
 require_once('php/Conexion_BD.php');
 $conexion = new conexionLogin();
 $db = $conexion->conectar();
@@ -53,17 +50,11 @@ $statement->bindParam(':id', $idCliente); // Vincula el parámetro :id con el va
 $statement->execute(); // Ejecuta la consulta
 // Obtener el resultado de la consulta
 $mascotas = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <?= Head('editar') ?>
 <?= starBody() ?>
-
-
 <style>
   /* Estilos para el título */
   .custom-title {
@@ -75,8 +66,6 @@ $mascotas = $statement->fetchAll(PDO::FETCH_ASSOC);
     border-bottom: 2px solid #ccc; 
     padding-bottom: 10px; 
   }
-
-  
   .custom-title:hover {
     color: #666; /* Cambio de color del texto al pasar el cursor */
     border-bottom-color: #666; /* Cambio de color de la línea inferior al pasar el cursor */
@@ -85,9 +74,7 @@ $mascotas = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- HTML con el título personalizado -->
 <center><h2 class="custom-title">Perfil del Cliente</h2></center>
-
 <body><!-- Imagen y algunos datos -->
-  
 <section>
     <div class="container">
         <div class="row">
@@ -106,8 +93,6 @@ $mascotas = $statement->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             </div>
-
-           
            <div class="col-md-8 d-flex">
                 <div class="card flex-grow-1">
                     <!-- Contenido de la segunda card -->
@@ -137,12 +122,9 @@ $mascotas = $statement->fetchAll(PDO::FETCH_ASSOC);
     </div>
     </div>
     </section>
-
     <div class="mt-3 text-center">
     <button onclick="window.location.href = 'editar.php'" class="btn btn-warning">Volver a Usuarios</button>
 </div>
-
-
     <section class="container mt-4">
     <div class="row d-flex justify-content-center">
         <div class="col-md-12">
@@ -170,10 +152,10 @@ $mascotas = $statement->fetchAll(PDO::FETCH_ASSOC);
                                     <td><?php echo $mascota['nombre'] ?></td>
                                     <td><?php echo $mascota['nombre_especie'] ?></td>
                                     <td><?php echo $mascota['nombre_raza'] ?></td>
-                                    <td><?php echo $mascota['peso'] ?></td>
+                                    <td><?php echo $mascota['peso'] ?><span> kg</span></td>
                                     <td><?php echo $mascota['sexo'] ?></td>
                                     <td><?php echo $mascota['color'] ?></td>
-                                    <td><?php echo $mascota['edad'] ?></td>
+                                    <td><?php echo $mascota['edad'] ?><span> meses</span></td>
                                     <td><a href="editar_macota.php?id1=<?php echo $clienteArray['idusuario']; ?>&id2=<?php echo $mascota['idmascota']; ?>" class="btn btn-info">Ver Información</a></td>
                                     <td><a href="calendar.php?id1=<?php echo $clienteArray['idusuario']; ?>&id2=<?php echo $mascota['idmascota']; ?>" class="btn btn-success">Agenda cita</a></td>
                                 </tr>
@@ -186,7 +168,6 @@ $mascotas = $statement->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </section>
-
 <section>
     <!-- Sección de botones -->
     <div class="row mt-4">
@@ -224,17 +205,10 @@ $mascotas = $statement->fetchAll(PDO::FETCH_ASSOC);
                      </form>
             </div>
           </div>
-
         </div>
     </div>
 </div>
 </section>
-
-
-
-
-
-
 <script>
 $(document).ready(function() {
     $('#clientesTable').DataTable({

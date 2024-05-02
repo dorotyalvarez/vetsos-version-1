@@ -56,9 +56,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?=Head('Editar M')?>
 
 <?=starBody()?>
-<div class="mt-3 text-right">
-    <button onclick="window.location.href = 'editar.php'" class="btn btn-secondary">Volver a Usuarios</button>
-</div>
+<style>
+  /* Estilos para el título */
+  .custom-title {
+    text-align: center;
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    font-size: 24px; 
+    color: #333;
+    border-bottom: 2px solid #ccc; 
+    padding-bottom: 10px; 
+  }
+
+  
+  .custom-title:hover {
+    color: #666; /* Cambio de color del texto al pasar el cursor */
+    border-bottom-color: #666; /* Cambio de color de la línea inferior al pasar el cursor */
+  }
+</style>
+
+<!-- HTML con el título personalizado -->
+<center><h2 class="custom-title">Información Mascota</h2></center>
+
+
 <div class="container my-8">
   <div class="card" style="max-width: 1600px;">
     <div class="row g-0">
@@ -136,8 +156,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <!-- Agrega más opciones de razas aquí -->
                   </select>
                 </div>
-                <!-- No incluyas el campo del nombre del usuario -->
-                <!-- Agregar más campos de la segunda parte del formulario si es necesario -->
                 <div class="mb-3">
               <label for="peso" class="form-label">peso kg:</label>
               <input type="text" name="peso" id="peso" class="form-control" value="<?php echo $fila['peso']; ?>" required>
@@ -146,8 +164,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <label for="sexo" class="form-label">sexo</label>
               <select   name="sexo" id="sexo" class="form-control" value="<?php echo $fila['sexo']; ?>" required>
               
-              <option value="1">macho</option>
-              <option value="2">hembra</option>
+              <option value="macho">macho</option>
+              <option value="hembra">hembra</option>
               </select>
               </div>
               <div class="mb-3">
@@ -174,25 +192,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
 </div>
 <div>
-  <br></br>
-</div>
-<!-- citas -->
-<div class="container-fluid bg-light py-3">
-  <div class="row justify-content-between align-items-center">
-    <div class="col-md-6">
-      <h3 class="m-0">Tus Citas</h3>
-    </div>
-    <div class="col-md-6 text-md-right">
-      <button class="btn btn-primary">Agregar cita</button>
-    </div>
-  </div>
-</div>
-<div>
-  <br></br>
-</div>
-<!-- recordatorio -->
+  <section>
+    <div class="row">
+      <div class="col-md-6">
+      <div class="mt-3 text-center">
+    <button onclick="window.location.href = 'editar.php'" class="btn btn-warning">Volver a Usuarios</button>
+     </div>
+      </div>
+      <div class="col-md-6">
+      <div class="mt-3 text-center">
 <!-- Botón para abrir el modal -->
 <button id="openModalBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar recordatorio</button>
+</div>
+      </div>
+    </div>
+  </section>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -205,33 +219,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="modal-body">
         <!-- Formulario para ingresar texto -->
         <form id="recordatorioForm" action="controllers/recordatorio.php" method="post">
+          <!-- Campo oculto para el ID de la mascota -->
+          <input type="hidden" id="idMascota" name="idMascota" value="<?php echo $id2; ?>">
           <div class="mb-3">
             <label for="textoRecordatorio" class="form-label">Texto del recordatorio:</label>
             <textarea class="form-control" id="textoRecordatorio" name="textoRecordatorio" rows="3"></textarea>
           </div>
+          <div class="mb-3">
+            <label for="fechaVencimiento" class="form-label">Fecha de vencimiento:</label>
+            <input type="date" class="form-control" id="fechaVencimiento" name="fechaVencimiento">
+          </div>
+
+          <!-- Botón para enviar el formulario -->
+          <button type="submit" class="btn btn-primary" id="guardarRecordatorioBtn">Guardar</button>
+          <button type="button" class="btn btn-secondary text-center" data-bs-dismiss="modal">Cerrar</button>
         </form>
       </div>
-      <div class="modal-footer">
-        <!-- Botón para cerrar el modal -->
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <!-- Botón para enviar el formulario -->
-        <button type="submit" form="recordatorioForm" class="btn btn-primary">Guardar</button>
-      </div>
+      
     </div>
   </div>
 </div>
 
+<!-- Agregar SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
   // Esperar a que el DOM esté completamente cargado
   document.addEventListener('DOMContentLoaded', function() {
-    // Obtener el botón de abrir modal
-    var openModalBtn = document.getElementById('openModalBtn');
-    
-    // Agregar un listener al botón para abrir el modal al hacer clic
-    openModalBtn.addEventListener('click', function() {
-      var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-      myModal.show();
+    // Agregar un listener al formulario para interceptar su envío
+    document.getElementById('recordatorioForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Evitar el envío predeterminado del formulario
+
+      // Obtener los datos del formulario
+      var formData = new FormData(this);
+
+      // Realizar una solicitud AJAX para enviar el formulario
+      fetch('controllers/recordatorio.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Mostrar el mensaje de éxito con SweetAlert2
+          Swal.fire({
+            title: 'Recordatorio guardado',
+            text: '¡Tu recordatorio ha sido guardado correctamente!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+            // Cerrar el modal después de mostrar el mensaje de éxito
+            var modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
+            modal.hide();
+          });
+        })
+        .catch(error => {
+          console.error('Error al enviar el formulario:', error);
+          // Mostrar un mensaje de error en caso de que falle la solicitud AJAX
+          Swal.fire({
+            title: 'Error',
+            text: 'Ha ocurrido un error al guardar el recordatorio.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        });
     });
   });
 </script>
@@ -277,8 +327,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 </script>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="funtion/preview_imagen.js"></script>
 <script src="funtion/preview_imge_mascota.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

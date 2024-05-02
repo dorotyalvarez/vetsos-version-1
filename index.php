@@ -2,14 +2,15 @@
 <html>
 <?php
 session_start();
-if(empty($_SESSION['active'])){
-	header( "location: login.php" );  //redirect to dashboard if user is already logged in
+if (empty($_SESSION['active'])) {
+    header("location: login.php");  //redirect to dashboard if user is already logged in
 }
 error_reporting(E_ALL);
 require_once('funtion/scripts.php');
 
 
 ?>
+
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8" />
@@ -26,27 +27,25 @@ require_once('funtion/scripts.php');
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <!-- CSS -->
-    
+
     <link rel="stylesheet" type="text/css" href="vendors/styles/core.css" />
     <link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css" />
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/dataTables.bootstrap4.min.css" />
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/responsive.bootstrap4.min.css" />
     <link rel="stylesheet" type="text/css" href="vendors/styles/style.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
-<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-<link rel="stylesheet" href="tablacss/estilo.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <link rel="stylesheet" href="tablacss/estilo.css">
 
-<script> $(document).ready( function () {
-             $('#myTable').DataTable(
-        {
-            "language" :{
-                "url":"//cdn.datatables.net/plug-ins/2.0.3/i18n/es-ES.json"
-            }
-          }
-       );
-      } 
-     );
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/2.0.3/i18n/es-ES.json"
+                }
+            });
+        });
     </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -79,9 +78,21 @@ require_once('funtion/scripts.php');
         })(window, document, "script", "dataLayer", "GTM-NXZMQSS");
     </script>
     <!-- End Google Tag Manager -->
+    <style>
+        .bg-image {
+            background-image: url('');
+            background-size: 1960px 1200px;
+            /* Ancho y alto deseados */
+            background-position: center;
+            /* Centra la imagen de fondo */
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-image">
+    <!-- Tu contenido HTML aquí -->
+
     <div class="pre-loader">
         <div class="pre-loader-box">
             <div class="loader-logo">
@@ -111,467 +122,583 @@ require_once('funtion/scripts.php');
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <div class="form-group row">
-                                    <label class="col-sm-12 col-md-2 col-form-label">From</label
-										>
-										<div class="col-sm-12 col-md-10">
-											<input
-												class="form-control form-control-sm form-control-line"
-												type="text"
-											/>
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-12 col-md-2 col-form-label">To</label>
+                                    <label class="col-sm-12 col-md-2 col-form-label">From</label>
                                     <div class="col-sm-12 col-md-10">
                                         <input class="form-control form-control-sm form-control-line" type="text" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Subject</label
-										>
-										<div class="col-sm-12 col-md-10">
-											<input
-												class="form-control form-control-sm form-control-line"
-												type="text"
-											/>
-										</div>
-									</div>
-									<div class="text-right">
-										<button class="btn btn-primary">Search</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div class="header-right">
-			<div class="text-center mt-4">
-					
-			<p id="hora">Barrancabermeja santander <?php echo fechaC();?></p>
-					
-				</div>
-				<div class="dashboard-setting user-notification">
-					<div class="dropdown">
-						<a
-							class="dropdown-toggle no-arrow"
-							href="javascript:;"
-							data-toggle="right-sidebar"
-						>
-							<i class="dw dw-settings2"></i>
-						</a>
-					</div>
-				</div>
-				<div class="user-notification">
-					<div class="dropdown">
-						<a
-							class="dropdown-toggle no-arrow"
-							href="#"
-							role="button"
-							data-toggle="dropdown"
-						>
-							<i class="icon-copy dw dw-notification"></i>
-							<span class="badge notification-active"></span>
-						</a>
-						<div class="dropdown-menu dropdown-menu-right">
-							<div class="notification-list mx-h-350 customscroll">
-								<ul>
-									<li>
-										<a href="#">
-											<img src="vendors/images/img.jpg" alt="" />
-											<h3>John Doe</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="vendors/images/photo1.jpg" alt="" />
-											<h3>Lea R. Frith</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="vendors/images/photo2.jpg" alt="" />
-											<h3>Erik L. Richards</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="vendors/images/photo3.jpg" alt="" />
-											<h3>John Doe</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="vendors/images/photo4.jpg" alt="" />
-											<h3>Renee I. Hansen</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="vendors/images/img.jpg" alt="" />
-											<h3>Vicki M. Coleman</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="user-info-dropdown">
-					<div class="dropdown">
-						<a
-							class="dropdown-toggle"
-							href="#"
-							role="button"
-							data-toggle="dropdown"
-						>
-							<span class="user-icon">
-								<img src="vendors/images/photo1.jpg" alt="" />
-							</span>
-							<span class="user-name"><?php echo $_SESSION['nombre'];?></span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-						>
-							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-user1"></i> Profile</a
-							>
-							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-settings2"></i> Setting</a
-							>
-							<a class="dropdown-item" href="faq.html"
-								><i class="dw dw-help"></i> Help</a
-							>
-							<a class="dropdown-item" href=controllers/salir.php
-								><i class="dw dw-logout"></i> Log Out</a
-							>
-						</div>
-						
-					</div>
-					
-				</div>
-				<div class="text-center mt-4">
-				<?php
-				if ($_SESSION['id_rol'] == 1) {
-					echo "<p> Administrador</p>";
-				} elseif ($_SESSION['id_rol'] == 2) {
-					echo "<p> Usuario</p>";
-				} elseif ($_SESSION['id_rol'] == 4) {
-					echo "<p> Doctor</p>";	
-				} else {
-					echo "<p>Rol no definido</p>";
-				}
-				?>
-
-					</div>
-			</div>
-		</div>
-
-		<div class="right-sidebar">
-			<div class="sidebar-title">
-				<h3 class="weight-600 font-16 text-blue">
-					Layout Settings
-					<span class="btn-block font-weight-400 font-12"
-						>User Interface Settings</span
-					>
-				</h3>
-				<div class="close-sidebar" data-toggle="right-sidebar-close">
-					<i class="icon-copy ion-close-round"></i>
-				</div>
-			</div>
-			<div class="right-sidebar-body customscroll">
-				<div class="right-sidebar-body-content">
-					<h4 class="weight-600 font-18 pb-10">Header Background</h4>
-					<div class="sidebar-btn-group pb-30 mb-10">
-						<a
-							href="javascript:void(0);"
-							class="btn btn-outline-primary header-white active"
-							>White</a
-						>
-						<a
-							href="javascript:void(0);"
-							class="btn btn-outline-primary header-dark"
-							>Dark</a
-						>
-					</div>
-
-					<h4 class="weight-600 font-18 pb-10">Sidebar Background</h4>
-					<div class="sidebar-btn-group pb-30 mb-10">
-						<a
-							href="javascript:void(0);"
-							class="btn btn-outline-primary sidebar-light"
-							>White</a
-						>
-						<a
-							href="javascript:void(0);"
-							class="btn btn-outline-primary sidebar-dark active"
-							>Dark</a
-						>
-					</div>
-
-					<h4 class="weight-600 font-18 pb-10">Menu Dropdown Icon</h4>
-					<div class="sidebar-radio-group pb-10 mb-10">
-						<div class="custom-control custom-radio custom-control-inline">
-							<input
-								type="radio"
-								id="sidebaricon-1"
-								name="menu-dropdown-icon"
-								class="custom-control-input"
-								value="icon-style-1"
-								checked=""
-							/>
-							<label class="custom-control-label" for="sidebaricon-1"
-								><i class="fa fa-angle-down"></i
-							></label>
+                                    <label class="col-sm-12 col-md-2 col-form-label">To</label>
+                                    <div class="col-sm-12 col-md-10">
+                                        <input class="form-control form-control-sm form-control-line" type="text" />
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon" class="custom-control-input" value="icon-style-2" />
-                                    <label class="custom-control-label" for="sidebaricon-2"><i class="ion-plus-round"></i
-							></label>
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-2 col-form-label">Subject</label>
+                                    <div class="col-sm-12 col-md-10">
+                                        <input class="form-control form-control-sm form-control-line" type="text" />
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="sidebaricon-3" name="menu-dropdown-icon" class="custom-control-input" value="icon-style-3" />
-                                    <label class="custom-control-label" for="sidebaricon-3"><i class="fa fa-angle-double-right"></i
-							></label>
+                                <div class="text-right">
+                                    <button class="btn btn-primary">Search</button>
                                 </div>
-                            </div>
-
-                            <h4 class="weight-600 font-18 pb-10">Menu List Icon</h4>
-                            <div class="sidebar-radio-group pb-30 mb-10">
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="sidebariconlist-1" name="menu-list-icon" class="custom-control-input" value="icon-list-style-1" checked="" />
-                                    <label class="custom-control-label" for="sidebariconlist-1"><i class="ion-minus-round"></i
-							></label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="sidebariconlist-2" name="menu-list-icon" class="custom-control-input" value="icon-list-style-2" />
-                                    <label class="custom-control-label" for="sidebariconlist-2"><i class="fa fa-circle-o" aria-hidden="true"></i
-							></label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="sidebariconlist-3" name="menu-list-icon" class="custom-control-input" value="icon-list-style-3" />
-                                    <label class="custom-control-label" for="sidebariconlist-3"><i class="dw dw-check"></i
-							></label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="sidebariconlist-4" name="menu-list-icon" class="custom-control-input" value="icon-list-style-4" checked="" />
-                                    <label class="custom-control-label" for="sidebariconlist-4"><i class="icon-copy dw dw-next-2"></i
-							></label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="sidebariconlist-5" name="menu-list-icon" class="custom-control-input" value="icon-list-style-5" />
-                                    <label class="custom-control-label" for="sidebariconlist-5"><i class="dw dw-fast-forward-1"></i
-							></label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="sidebariconlist-6" name="menu-list-icon" class="custom-control-input" value="icon-list-style-6" />
-                                    <label class="custom-control-label" for="sidebariconlist-6"><i class="dw dw-next"></i
-							></label>
-                                </div>
-                            </div>
-
-                            <div class="reset-options pt-30 text-center">
-                                <button class="btn btn-danger" id="reset-settings">
-							Reset Settings
-						</button>
                             </div>
                         </div>
                     </div>
+                </form>
             </div>
+        </div>
+        <div class="header-right">
+            <div class="text-center mt-4">
 
-            <div class="left-side-bar">   
-                <div class="brand-logo">
-                    <a href="index.php">
-                        <img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
-                        <img src="vendors/images/deskapp-logo-white.svg" alt="" class="light-logo" />
+                <p id="hora">Barrancabermeja Santander <?php echo fechaC(); ?> </p>
+
+            </div>
+            <div class="dashboard-setting user-notification">
+                <div class="dropdown">
+                    <a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
+                        <i class="dw dw-settings2"></i>
                     </a>
-                    <div class="close-sidebar" data-toggle="left-sidebar-close">
-                        <i class="ion-close-round"></i>
-                    </div>
                 </div>
-                <div class="menu-block customscroll">
-                    <div class="sidebar-menu">
-                        <ul id="accordion-menu">
-                            <li class="dropdown">
-                                <a href="index.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-house"></span
-								><span class="mtext">Home</span>
-                                </a>
-
-                            </li>
-                            <li class="dropdown">
-                                <a href="estadistica.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-textarea-resize"></span
-								><span class="mtext">Estadistica</span>
-                                </a>
-
-                            </li>
-                            <li class="dropdown">
-                                <a href="usuarios.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-archive"></span
-								><span class="mtext">Usuarios</span>
-                                </a>
-
-                            </li>
-                            <li>
-                                <a href="calendar.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-calendar4-week"></span
-								><span class="mtext">Calendario</span>
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="cliente.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon dw dw-edit-2"></span
-								><span class="mtext"> Mascota (Paciente) </span>
-                                </a>
-
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="doctores.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-pie-chart"></span
-								><span class="mtext">Doctores</span>
-                                </a>
-
-                            </li>
-                            <li class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle">
-                                    <span class="micon bi bi-file-earmark-text"></span
-								><span class="mtext">Opciones Adicionales</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li><a href="login.php">Login</a></li>
-                                    <li><a href="forgot-password.html">Forgot Password</a></li>
-                                    <li><a href="reset-password.html">Reset Password</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle">
-                                    <span class="micon bi bi-bug"></span
-								><span class="mtext">Error Pages</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li><a href="400.html">400</a></li>
-                                    <li><a href="403.html">403</a></li>
-                                    <li><a href="404.html">404</a></li>
-                                    <li><a href="500.html">500</a></li>
-                                    <li><a href="503.html">503</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="blank.html" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-back"></span
-								><span class="mtext">Extra Pages</span>
-                                </a>
-
-                            </li>
-
-                            <li>
-                                <a href="citas_programadas.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-diagram-3"></span
-								><span class="mtext">Citas Programadas</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mensaje.php" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-chat-right-dots"></span
-								><span class="mtext">Chat</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="invoice.html" class="dropdown-toggle no-arrow">
-                                    <span class="micon bi bi-receipt-cutoff"></span
-								><span class="mtext">inventario</span>
-                                </a>
-                            </li>
-
-
-                            <li>
-							<li>
-  
-
-                            </li>
-                        </ul>
+            </div>
+            <div class="user-notification">
+                <div class="dropdown">
+                    <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
+                        <i class="icon-copy dw dw-notification"></i>
+                        <span class="badge notification-active"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="notification-list mx-h-350 customscroll">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <img src="vendors/images/img.jpg" alt="" />
+                                        <h3>John Doe</h3>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                                            elit, sed...
+                                        </p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="vendors/images/photo1.jpg" alt="" />
+                                        <h3>Lea R. Frith</h3>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                                            elit, sed...
+                                        </p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="vendors/images/photo2.jpg" alt="" />
+                                        <h3>Erik L. Richards</h3>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                                            elit, sed...
+                                        </p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="vendors/images/photo3.jpg" alt="" />
+                                        <h3>John Doe</h3>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                                            elit, sed...
+                                        </p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="vendors/images/photo4.jpg" alt="" />
+                                        <h3>Renee I. Hansen</h3>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                                            elit, sed...
+                                        </p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="vendors/images/img.jpg" alt="" />
+                                        <h3>Vicki M. Coleman</h3>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                                            elit, sed...
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="mobile-menu-overlay"></div>
+            <div class="user-info-dropdown">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <span class="user-icon">
+                            <img src="vendors/images/photo1.jpg" alt="" />
+                        </span>
+                        <span class="user-name"><?php echo $_SESSION['nombre']; ?></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
+                        <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
+                        <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
+                        <a class="dropdown-item" href=controllers/salir.php><i class="dw dw-logout"></i> Log Out</a>
+                    </div>
 
-
-
-
-            <!-- dividir aqui -->
-
-
-            <div class="main-container">
-
-
-
-                <!-- dividir aqui -->
-
-
-                <div class="title pb-20 pt-20">
-                    <h2 class="h3 mb-0">ayuda goku</h2>
                 </div>
 
-                <div class="footer-wrap pd-20 mb-20 card-box">
-                    veterinaria sos todos los derechos reservados
-                    <a href="https://github.com/dorotyalvarez" target="_blank">VETERINARIA SOS</a
-					>
-				</div>
-			</div>
-		</div>
-		<!-- welcome modal start -->
-		<div class="welcome-modal">
-			<button class="welcome-modal-close">
-				<i class="bi bi-x-lg"></i>
-			</button>
-			<iframe
-				class="w-100 border-0"
-				src="https://embed.lottiefiles.com/animation/31548"
-			></iframe>
-			<div class="text-center">
-				<h3 class="h5 weight-500 text-center mb-2">
-					feliz dia
-					<span role="img" aria-label="gratitude">❤️</span>
-                                                    </h3>
-                                                    <div class="pb-2">
-                                                       
-			</div>
-			<div class="text-center mb-1">
-				<div>
-					<a
-						
-					>
-						<span class="text-danger weight-600">veterinario</span>
-						<span class="weight-600">FAVORITO</span>
-						<i class="fa fa-github"></i>
-					</a>
+            </div>
+            <div class="text-center mt-4">
+                <?php
+                if ($_SESSION['id_rol'] == 1) {
+                    echo "<p> Administrador</p>";
+                } elseif ($_SESSION['id_rol'] == 2) {
+                    echo "<p> Usuario</p>";
+                } elseif ($_SESSION['id_rol'] == 4) {
+                    echo "<p> Doctor</p>";
+                } else {
+                    echo "<p>Rol no definido</p>";
+                }
+                ?>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="right-sidebar">
+        <div class="sidebar-title">
+            <h3 class="weight-600 font-16 text-blue">
+                Layout Settings
+                <span class="btn-block font-weight-400 font-12">User Interface Settings</span>
+            </h3>
+            <div class="close-sidebar" data-toggle="right-sidebar-close">
+                <i class="icon-copy ion-close-round"></i>
+            </div>
+        </div>
+        <div class="right-sidebar-body customscroll">
+            <div class="right-sidebar-body-content">
+                <h4 class="weight-600 font-18 pb-10">Header Background</h4>
+                <div class="sidebar-btn-group pb-30 mb-10">
+                    <a href="javascript:void(0);" class="btn btn-outline-primary header-white active">White</a>
+                    <a href="javascript:void(0);" class="btn btn-outline-primary header-dark">Dark</a>
+                </div>
+
+                <h4 class="weight-600 font-18 pb-10">Sidebar Background</h4>
+                <div class="sidebar-btn-group pb-30 mb-10">
+                    <a href="javascript:void(0);" class="btn btn-outline-primary sidebar-light">White</a>
+                    <a href="javascript:void(0);" class="btn btn-outline-primary sidebar-dark active">Dark</a>
+                </div>
+
+                <h4 class="weight-600 font-18 pb-10">Menu Dropdown Icon</h4>
+                <div class="sidebar-radio-group pb-10 mb-10">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input" value="icon-style-1" checked="" />
+                        <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon" class="custom-control-input" value="icon-style-2" />
+                        <label class="custom-control-label" for="sidebaricon-2"><i class="ion-plus-round"></i></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="sidebaricon-3" name="menu-dropdown-icon" class="custom-control-input" value="icon-style-3" />
+                        <label class="custom-control-label" for="sidebaricon-3"><i class="fa fa-angle-double-right"></i></label>
+                    </div>
+                </div>
+
+                <h4 class="weight-600 font-18 pb-10">Menu List Icon</h4>
+                <div class="sidebar-radio-group pb-30 mb-10">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="sidebariconlist-1" name="menu-list-icon" class="custom-control-input" value="icon-list-style-1" checked="" />
+                        <label class="custom-control-label" for="sidebariconlist-1"><i class="ion-minus-round"></i></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="sidebariconlist-2" name="menu-list-icon" class="custom-control-input" value="icon-list-style-2" />
+                        <label class="custom-control-label" for="sidebariconlist-2"><i class="fa fa-circle-o" aria-hidden="true"></i></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="sidebariconlist-3" name="menu-list-icon" class="custom-control-input" value="icon-list-style-3" />
+                        <label class="custom-control-label" for="sidebariconlist-3"><i class="dw dw-check"></i></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="sidebariconlist-4" name="menu-list-icon" class="custom-control-input" value="icon-list-style-4" checked="" />
+                        <label class="custom-control-label" for="sidebariconlist-4"><i class="icon-copy dw dw-next-2"></i></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="sidebariconlist-5" name="menu-list-icon" class="custom-control-input" value="icon-list-style-5" />
+                        <label class="custom-control-label" for="sidebariconlist-5"><i class="dw dw-fast-forward-1"></i></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="sidebariconlist-6" name="menu-list-icon" class="custom-control-input" value="icon-list-style-6" />
+                        <label class="custom-control-label" for="sidebariconlist-6"><i class="dw dw-next"></i></label>
+                    </div>
+                </div>
+
+                <div class="reset-options pt-30 text-center">
+                    <button class="btn btn-danger" id="reset-settings">
+                        Reset Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="left-side-bar">
+        <div class="brand-logo">
+            <a href="index.php">
+                <img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
+                <img src="vendors/images/deskapp-logo-white.svg" alt="" class="light-logo" />
+            </a>
+            <div class="close-sidebar" data-toggle="left-sidebar-close">
+                <i class="ion-close-round"></i>
+            </div>
+        </div>
+        <div class="menu-block customscroll">
+            <div class="sidebar-menu">
+                <ul id="accordion-menu">
+                    <li class="dropdown">
+                        <a href="index.php" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-house"></span><span class="mtext">Home</span>
+                        </a>
+
+                    </li>
+                    <li class="dropdown">
+                        <a href="estadistica.php" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-textarea-resize"></span><span class="mtext">Estadistica</span>
+                        </a>
+
+                    </li>
+                    <li class="dropdown">
+                        <a href="usuarios.php" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-archive"></span><span class="mtext">Usuarios</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="calendar.php" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-calendar4-week"></span><span class="mtext">Calendario</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="cliente.php" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-edit-2"></span><span class="mtext"> Mascota (Paciente) </span>
+                        </a>
+
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="doctores.php" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-pie-chart"></span><span class="mtext">Doctores</span>
+                        </a>
+
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon bi bi-file-earmark-text"></span><span class="mtext">Opciones Adicionales</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="login.php">Login</a></li>
+                            <li><a href="forgot-password.html">Forgot Password</a></li>
+                            <li><a href="reset-password.html">Reset Password</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon bi bi-bug"></span><span class="mtext">Error Pages</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="400.html">400</a></li>
+                            <li><a href="403.html">403</a></li>
+                            <li><a href="404.html">404</a></li>
+                            <li><a href="500.html">500</a></li>
+                            <li><a href="503.html">503</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="blank.html" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-back"></span><span class="mtext">Extra Pages</span>
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="citas_programadas.php" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-diagram-3"></span><span class="mtext">Citas Programadas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mensaje.php" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-chat-right-dots"></span><span class="mtext">Chat</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="invoice.html" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-receipt-cutoff"></span><span class="mtext">inventario</span>
+                        </a>
+                    </li>
+
+
+                    <li>
+                    <li>
+
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+
+
+    <!-- dividir aqui -->
+    <style>
+        .custom-title {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-right: -10%;
+            font-size: 24px;
+            color: green;
+            border-bottom: 4px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .custom-title:hover {
+            color: #666;
+            /* Cambio de color del texto al pasar el cursor */
+            border-bottom-color: #666;
+            /* Cambio de color de la línea inferior al pasar el cursor */
+        }
+    </style>
+    <section class="d-flex justify-content-between" style="margin-top: 80px;">
+        <div class="container-fluid">
+            <h2 class="custom-title">Bienvenido a Veterinaria SOS</h2>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <section class="d-flex justify-content-between">
+        <div class="container mt-4">
+            <div class="row mt-4">
+                <div class="col-md-3">..</div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Buscar Clientes por Cédula</h5>
+                            <!-- Formulario con AJAX -->
+                            <form id="searchForm">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" placeholder="Buscar por cédula..." aria-label="Buscar por cédula..." id="searchInput" name="cedula">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">Buscar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- Fin del formulario con AJAX -->
+                            <!-- Contenedor para mostrar los resultados -->
+                            <div id="searchResults">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div id="clienteInfo"></div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <ul id="mascotasList"></ul>
+                                        <div id="registroUsuario" style="display: none;">
+                                            <button class="btn btn-success" id="registrarUsuarioBtn">Registrar Cliente</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">mascotas</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Event listener para el formulario
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            // Detener el comportamiento predeterminado del formulario
+            event.preventDefault();
+            // Obtener los datos del formulario
+            const formData = new FormData(this);
+            // Llamar a la función para realizar la búsqueda con AJAX
+            searchClients(formData);
+        });
+
+        function searchClients(formData) {
+            // Realizar la solicitud AJAX
+            fetch('consultas/cedula.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    // Verificar si la respuesta es un JSON válido
+                    if (!response.ok) {
+                        throw new Error('El cliente no existe');
+                    }
+                    return response.json(); // Parsear la respuesta como JSON
+                })
+                .then(data => {
+                    // Mostrar los resultados de la búsqueda en los contenedores correspondientes
+                    document.getElementById('clienteInfo').innerHTML = `
+                   <div class="cliente-info">
+                     <h6>Cliente: ${data.nombre}</h6>
+                        <div class="cliente-id">ID: ${data.id}</div>
+                   </div>`;
+
+                    const mascotasList = document.getElementById('mascotasList');
+                    mascotasList.innerHTML = '<h6 >Mascotas</h6>';
+                    data.mascotas.forEach(mascota => {
+                        mascotasList.innerHTML += `
+                     <li class="mascota-item row mb-4 align-items-start">
+                         <div class="col-md-6 d-flex flex-column justify-content-between">
+                             <div class="mascota-nombre">Nombre: ${mascota.nombre}</div>
+                             <div><!-- Dejar este espacio vacío para el botón --></div>
+                         </div>
+                         <div class="col-md-5 d-flex flex-column justify-content-start align-items-end">
+                             <button class="btn btn-success agendar-btn" data-cliente-id="${data.id}" data-mascota-id="${mascota.id}">Agendar Cita</button>
+                         </div>
+                     </li>`;
+                    });
+
+                    // Agregar el evento click a los botones de "Agendar Cita"
+                    const agendarButtons = document.querySelectorAll('.agendar-btn');
+                    agendarButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const clienteId = this.getAttribute('data-cliente-id');
+                            const mascotaId = this.getAttribute('data-mascota-id');
+                            window.location.href = `calendar.php?id_cliente=${clienteId}&id_mascota=${mascotaId}`;
+                        });
+                    });
+
+                    // Mostrar el botón "Registrar Usuario"
+                    document.getElementById('registroUsuario').style.display = 'block';
+                })
+                .catch(error => {
+                    // Mostrar mensaje de error
+                    document.getElementById('clienteInfo').innerHTML = '<p>EL CLIENTE no esta RGISTRADO</p>';
+                    console.error('Error:', error);
+                    // Ocultar el botón "Registrar Usuario"
+                    document.getElementById('registroUsuario').style.display = 'block';
+                });
+        }
+
+        // Event listener para el botón "Registrar Usuario"
+        document.getElementById('registrarUsuarioBtn').addEventListener('click', function() {
+            // Aquí puedes añadir la lógica para registrar un nuevo usuario
+            // Por ejemplo, podrías redirigir a una página de registro
+            window.location.href = 'cliente.php';
+            alert('Funcionalidad de registro de usuario aún no implementada');
+        });
+    </script>
+
+
+    <section class="d-flex justify-content-between" style="margin-top: 80px;">
+        <div class="container-fluid">
+            <h2 class="custom-title">Informacion de la semana</h2>
+        </div>
+    </section>
+
+    <section class="d-flex justify-content-between">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-3">.</div>
+                <div class="col-md-3">
+                    <div class="card bg-primary">
+                        <div class="card-body d-flex">
+                            usuarios
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                        <div class="card-footer d-flex align-item justify-content">
+                            footer
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-primary">
+                        <div class="card-body d-flex">
+                            usuarios
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                        <div class="card-footer">
+                            footer
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-primary">
+                        <div class="card-body d-flex">
+                            usuarios
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                        <div class="card-footer">
+                            footer
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+
+
+
+    <div class="container-fluid d-flex flex-column min-vh-100">
+        <!-- Contenido principal -->
+        <div class="row flex-grow-1">
+            <div class="col">
+                <div class="title pb-20 pt-20">
+                    <h2 class="h3 mb-0">.</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="row">
+            <div class="col">
+                <div class="footer-wrap bg-light">
+                    <div class="card-footer text-muted text-center">
+                        veterinaria sos todos los derechos reservados
+                        <a href="https://github.com/dorotyalvarez" target="_blank">VETERINARIA SOS</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- welcome modal start -->
+    <div class="welcome-modal">
+        <button class="welcome-modal-close">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        <iframe class="w-100 border-0" src="https://embed.lottiefiles.com/animation/31548"></iframe>
+        <div class="text-center">
+            <h3 class="h5 weight-500 text-center mb-2">
+                feliz dia
+                <span role="img" aria-label="gratitude">❤️</span>
+            </h3>
+            <div class="pb-2">
+
+            </div>
+            <div class="text-center mb-1">
+                <div>
+                    <a>
+                        <span class="text-danger weight-600">veterinario</span>
+                        <span class="weight-600">FAVORITO</span>
+                        <i class="fa fa-github"></i>
+                    </a>
                 </div>
                 <script async defer="defer" src="#"></script>
             </div>
@@ -598,14 +725,9 @@ require_once('funtion/scripts.php');
         <script src="src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
         <script src="vendors/scripts/dashboard3.js"></script>
         <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe
-				src="https://www.googletagmanager.com/ns.html?id=GTM-NXZMQSS"
-				height="0"
-				width="0"
-				style="display: none; visibility: hidden"
-			></iframe
-		></noscript>
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXZMQSS" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
+
 </body>
 
 </html>

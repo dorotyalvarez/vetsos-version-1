@@ -7,65 +7,86 @@ require_once('consultas/consultar_mensajes.php');
 <html lang="en">
 <?= Head('usuario') ?>
 <?= starBody() ?>
-<div>
-    <h3 id="tituloVista">mensajes recibidos</h3>
-    <br>
-</div>
-<div id="clientesTableContainer">
-    <table id="clientesTable" class="display">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>correo</th>
-                <th>Telefono</th>
-                <th>fecha_creacion</th>
-                <th>Acciones</th>
-                <th></th>  <!-- Nuevo encabezado para acciones -->
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($mensaje as $mensaje): ?>
-            <tr>
-                <td><?php echo $mensaje['nombre'] ?></td>
-                <td><?php echo $mensaje['correo'] ?></td>
-                <td><?php echo $mensaje['telefono'] ?></td>
-                <td><?php echo $mensaje['fecha_creacion'] ?></td>
-                <td>
-                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal_<?php echo $mensaje['id']; ?>">
-                        <i class="bi bi-eye-fill"></i> mensaje
-                    </button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-success btn-atendido" data-id="<?php echo $mensaje['id']; ?>">Atendido</button>
-                </td>
-            </tr>
+<style>  .custom-title {
+    text-align: center;
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    font-size: 24px; 
+    color: green;
+    border-bottom: 4px solid #ccc; 
+    padding-bottom: 10px; 
+  }
+  .custom-title:hover {
+    color: #666; /* Cambio de color del texto al pasar el cursor */
+    border-bottom-color: #666; /* Cambio de color de la línea inferior al pasar el cursor */
+  }
+</style>
+<!-- HTML con el título personalizado -->
+<center><h2 class="custom-title">Mensajes Pagina Wed</h2></center>
+<style> .bg-lightblue {
+    background-color: ; /* Celeste cielo claro */
+}
+</style>
+<div class="card bg-lightblue" >
+    <div class="card-body">
+        <h2 class="card-title text-center">Lista de Clientes</h2>
+        <div id="clientesTableContainer">
+            <table id="clientesTable" class="table display">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Fecha de Creación</th>
+                        <th>Acciones</th>
+                        <th></th> <!-- Nuevo encabezado para acciones -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($mensaje as $mensaje): ?>
+                    <tr>
+                        <td><?php echo $mensaje['nombre'] ?></td>
+                        <td><?php echo $mensaje['correo'] ?></td>
+                        <td><?php echo $mensaje['telefono'] ?></td>
+                        <td><?php echo $mensaje['fecha_creacion'] ?></td>
+                        <td>
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal_<?php echo $mensaje['id']; ?>">
+                                <i class="bi bi-eye-fill"></i> Mensaje
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success btn-atendido" data-id="<?php echo $mensaje['id']; ?>">Atendido</button>
+                        </td>
+                    </tr>
 
-            <!-- Modal para cada mensaje -->
-            <div class="modal fade" id="exampleModal_<?php echo $mensaje['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Detalles del mensaje</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Mensaje</h5>
-                                    <p class="card-text"><?php echo $mensaje['mensaje']; ?></p>
+                    <!-- Modal para cada mensaje -->
+                    <div class="modal fade" id="exampleModal_<?php echo $mensaje['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Detalles del Mensaje</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Mensaje</h5>
+                                            <p class="card-text"><?php echo $mensaje['mensaje']; ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cerrar</button>
-                        </div>
                     </div>
-                </div>
-            </div>
-            <!-- Fin del modal -->
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+                    <!-- Fin del modal -->
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -99,6 +120,8 @@ $(document).ready(function() {
         console.error('Error en la inicialización de DataTables:', error);
     }
 });
+</script>
+
 </script>
 
 </script>

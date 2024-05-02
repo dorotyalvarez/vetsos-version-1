@@ -46,3 +46,50 @@ body {
 .perfil-usuario button:hover {
     background-color: #45a049;
 }
+
+.cliente-info {
+    margin-bottom: 10px;
+    /* Ajusta el margen inferior según sea necesario */
+    padding: 10px;
+    /* Ajusta el relleno según sea necesario */
+    border: 1px solid #ccc;
+    /* Agrega un borde para resaltar */
+    border-radius: 5px;
+    /* Agrega esquinas redondeadas */
+}
+
+.cliente-id {
+    font-weight: bold;
+    /* Hace que el texto del ID sea negrita */
+}
+
+.mascota-item {
+    margin-bottom: 20px;
+    /* Margen inferior para separar los elementos */
+    padding: 10px;
+    /* Relleno para espacio interno */
+    border: 1px solid #ccc;
+    /* Borde para resaltar el elemento */
+    border-radius: 5px;
+    /* Esquinas redondeadas */
+    background-color: #f9f9f9;
+    /* Color de fondo */
+}
+
+
+/* Estilos para el nombre de la mascota */
+
+.mascota-nombre {
+    font-weight: bold;
+    /* Hace que el nombre sea negrita */
+    margin-bottom: 5px;
+    /* Margen inferior para separar del botón */
+}
+
+
+/* Estilos para el botón de agendar cita */
+
+.agendar-btn {
+    margin-top: 5px;
+    /* Margen superior para separar del nombre */
+}
