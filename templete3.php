@@ -1,38 +1,32 @@
-<!DOCTYPE html>
-<html>
 <?php
 session_start();
 if(empty($_SESSION['active'])){
-	header( "location: ../login.php" );  //redirect to dashboard if user is already logged in
+	header( "location: /login.php" );  //redirect to dashboard if user is already logged in
 }
-// Verificar si el usuario tiene el rol adecuado
 if ($_SESSION['id_rol'] != 4) {
     // Si el usuario no tiene el rol adecuado, redirigirlo a la página de error
-    header("Location: ../403.html");
+    header("Location: 403.html");
     exit; // Salir del script
 }
 error_reporting(E_ALL);
 
-require_once('../funtion/scripts.php');
-require_once(__DIR__ . '/../consultas/notificaciones.php'); // asi es como se debe llamar los archivos en otras carpetas
-require_once(__DIR__ . '/../consultas/estadistica.php');
-$clientesActivos = obtenerClientesActivos();
-$citasAtendidas = obtenerCitasAtendidas();
-$citasPendientes = obtenerCitasPendientes();
+require_once(__DIR__ . '/consultas/notificaciones.php');
 
 $recordatorios = consultarRecordatorios();
 
-
+function Head($title){
+ob_start();
 ?>
-<head>
-    <!-- Basic Page Info -->
-    <meta charset="utf-8" />
+    <head>
+     <!-- Basic Page Info -->
+	 <meta charset="utf-8" />
     <title>veterinaria sos</title>
+    
 
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="../vendors/images/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="../vendors/images/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="../vendors/images/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="vendors/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="vendors/images/favicon-16x16.png" />
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -41,28 +35,16 @@ $recordatorios = consultarRecordatorios();
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <!-- CSS -->
     
-    <link rel="stylesheet" type="text/css" href="../vendors/styles/core.css" />
-    <link rel="stylesheet" type="text/css" href="../vendors/styles/icon-font.min.css" />
-    <link rel="stylesheet" type="text/css" href="../src/plugins/datatables/css/dataTables.bootstrap4.min.css" />
-    <link rel="stylesheet" type="text/css" href="../src/plugins/datatables/css/responsive.bootstrap4.min.css" />
-    <link rel="stylesheet" type="text/css" href="../vendors/styles/style.css" />
-    <link rel="stylesheet" href="../tablacss/estilo.css">
+    <link rel="stylesheet" type="text/css" href="vendors/styles/core.css" />
+    <link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css" />
+    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/responsive.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendors/styles/style.css" />
+  
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-
-<script> $(document).ready( function () {
-             $('#myTable').DataTable(
-        {
-            "language" :{
-                "url":"//cdn.datatables.net/plug-ins/2.0.3/i18n/es-ES.json"
-            }
-          }
-       );
-      } 
-     );
-    </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBZ3SGGX85"></script>
@@ -95,12 +77,53 @@ $recordatorios = consultarRecordatorios();
     </script>
     <!-- End Google Tag Manager -->
 </head>
+    <?php
+    return ob_get_clean();
+}
+
+function starBody(){
+	require_once('funtion/scripts.php');
+	
+	
+    ob_start();
+?>
 
 <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Título</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            
+        }
+    </style>
+	<!-- para cargar tablas y  demas sin que se vean los loading -->
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+<link rel="stylesheet" href="tablacss/estilo.css">
+<script> $(document).ready( function () {
+             $('#myTable').DataTable(
+        {
+            "language" :{
+                "url":"//cdn.datatables.net/plug-ins/2.0.3/i18n/es-ES.json"
+            }
+          }
+       );
+      } 
+     );
+    </script>
+	<!-- hasta aqui lo de las tablas -->
+
     <div class="pre-loader">
+		
         <div class="pre-loader-box">
             <div class="loader-logo">
-                <img src="../vendors/images/deskapp-logo.svg" alt="" />
+                <img src="vendors/images/deskapp-logo.svg" alt="" />
                 <!-- cambiar imagen crear una  -->
             </div>
             <div class="loader-progress" id="progress_div">
@@ -196,7 +219,7 @@ $recordatorios = consultarRecordatorios();
                         foreach ($recordatorios as $recordatorio) {
                             echo '<li>';
                             echo '<a href="#">';
-                            echo '<img src="../vendors/images/icons8-recordatorios-de-citas.gif" alt="" />';
+                            echo '<img src="vendors/images/icons8-recordatorios-de-citas.gif" alt="" />';
 							echo '<h3> Mascota :' . $recordatorio['NombreMascota'] . '</h3>';
                             echo '<h3> Cliente :' . $recordatorio['nombre'] . '</h3>';
 							echo '<p style="color: red;" > vence: ' . $recordatorio['fechaVencimiento'] . '</p>';
@@ -215,6 +238,7 @@ $recordatorios = consultarRecordatorios();
         </div>
     </div>
 </div>
+
 				<div class="user-info-dropdown">
 					<div class="dropdown">
 						<a
@@ -224,7 +248,7 @@ $recordatorios = consultarRecordatorios();
 							data-toggle="dropdown"
 						>
 							<span class="user-icon">
-								<img src="../vendors/images/8454452.png" alt="" />
+								<img src="vendors/images/8454452.png" alt="" />
 							</span>
 							<span class="user-name"><?php echo $_SESSION['nombre'];?></span>
 						</a>
@@ -240,7 +264,7 @@ $recordatorios = consultarRecordatorios();
 							<a class="dropdown-item" href="faq.html"
 								><i class="dw dw-help"></i> Help</a
 							>
-							<a class="dropdown-item" href=../controllers/salir.php
+							<a class="dropdown-item" href=controllers/salir.php
 								><i class="dw dw-logout"></i> Log Out</a
 							>
 						</div>
@@ -252,11 +276,13 @@ $recordatorios = consultarRecordatorios();
 				<?php
 				if ($_SESSION['id_rol'] == 1) {
 					echo "<p> Administrador</p>";
+
 				} elseif ($_SESSION['id_rol'] == 2) {
 					echo "<p> Usuario</p>";
 				} elseif ($_SESSION['id_rol'] == 4) {
-					echo "<p> Doctor</p>";	
+					echo "<p> Doctor</p>";
 				} else {
+
 					echo "<p>Rol no definido</p>";
 				}
 				?>
@@ -376,12 +402,11 @@ $recordatorios = consultarRecordatorios();
                         </div>
                     </div>
             </div>
-
             <div class="left-side-bar">   
                 <div class="brand-logo">
                     <a href="index.php">
-                        <img src="../vendors/images/untitled1.svg" alt="" class="dark-logo" />
-                        <img src="../vendors/images/untitled2.svg" alt="" class="light-logo" />
+                        <img src="vendors/images/untitled1.svg" alt="" class="dark-logo" />
+                        <img src="vendors/images/untitled2.svg" alt="" class="light-logo" />
                     </a>
                     <div class="close-sidebar" data-toggle="left-sidebar-close">
                         <i class="ion-close-round"></i>
@@ -391,20 +416,20 @@ $recordatorios = consultarRecordatorios();
                     <div class="sidebar-menu">
                         <ul id="accordion-menu">
                             <li class="dropdown">
-                                <a href="../doctor/index.php" class="dropdown-toggle no-arrow">
+                                <a href="/doctor/index.php" class="dropdown-toggle no-arrow">
                                     <span class="micon bi bi-house"></span
 								><span class="mtext">Home</span>
                                 </a>
 
                             </li>
-                         
+
                             <li>
                                 <a href="citas_programadas.php" class="dropdown-toggle no-arrow">
                                     <span class="micon bi bi-diagram-3"></span
 								><span class="mtext">Citas Programadas</span>
                                 </a>
                             </li>
-                           
+                         
                             
 
 							<li>
@@ -416,184 +441,44 @@ $recordatorios = consultarRecordatorios();
                 </div>
             </div>
             <div class="mobile-menu-overlay"></div>
-            <style>
-  /* Estilos para el título */
-  .custom-title {
-    text-align: center;
-    margin-top: 20px; 
-    margin-bottom: 20px; 
-    font-size: 24px; 
-    color: #333;
-    border-bottom: 2px solid #ccc; 
-    padding-bottom: 10px; 
-  }
-  .custom-title:hover {
-    color: #666; /* Cambio de color del texto al pasar el cursor */
-    border-bottom-color: #666; /* Cambio de color de la línea inferior al pasar el cursor */
-  }
-</style>
-
-            <section class="d-flex justify-content-between" style="margin-top: 80px;">
-        <div class="container-fluid">
-            <h2 class="custom-title">Informacion de la semana</h2>
-        </div>
-    </section>
-
-    <style>
-    .custom-card {
-        margin-bottom: 20px; /* Margen inferior */
-        border-radius: 10px; /* Bordes redondeados */
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra inicial */
-        transition: box-shadow 0.3s ease; /* Transición suave de la sombra */
-    }
-
-    .custom-card:hover {
-        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada al pasar el mouse */
-    }
-
-    .custom-card .card-body {
-        padding: 20px; /* Espaciado interno */
-    }
-
-    .custom-card .card-footer {
-        padding: 10px 20px; /* Espaciado interno */
-    }
-</style>
-<style>
-    /* Estilos para el enlace "Ver detalles" */
-    .ver-detalles {
-        color: #ffffff; /* Color del texto */
-        text-decoration: none; /* Sin subrayado */
-        font-weight: bold; /* Negrita */
-        font-size: 14px; /* Tamaño de fuente */
-        transition: color 0.3s ease; /* Transición suave del color */
-    }
-
-    .ver-detalles:hover {
-        color: #f8f9fa; /* Cambio de color al pasar el mouse */
-    }
-</style>
-
-<section class="d-flex justify-content-between">
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-2">.</div>
-            <div class="col-md-3">
-                <div class="card bg-success custom-card">
-                    <div class="card-body d-flex align-item-center justify-content-between">
-                        usuarios
-                        <i class="bi bi-person-circle"></i>
-                    </div>
-                    <div class="card-footer d-flex align-item-center justify-content-between">
-                        Total: <?php echo $clientesActivos; ?>
-                        <a href="<?php /* Aquí la URL para ver detalles */ ?>" class="text-white">Ver detalles</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-info custom-card">
-                    <div class="card-body d-flex align-item-center justify-content-between">
-                        citas Atendidas     
-                        <i class="bi bi-calendar-event-fill"></i>
-                    </div>
-                    <div class="card-footer d-flex align-item-center justify-content-between"> 
-                        Total: <?php echo $citasAtendidas; ?>
-                        <a href="cita_atendidas.php" class="ver-detalles">ver detalles</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card bg-warning custom-card">
-                    <div class="card-body d-flex align-item-center justify-content-between">
-                        citas pendiente
-                        <i class="bi bi-bank"></i>
-                    </div>
-                    <div class="card-footer d-flex align-item-center justify-content-between">
-                        <span><?php echo obtenerCitasPendientes(); ?></span>
-                        <a href="citas_programadas.php" class="ver-detalles">ver detalles</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 
-    <section class="d-flex justify-content-between">
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-2">.</div>
-            <div class="col-md-3">
-                <div class="card" style="background-color: #14E0F1;">
-                    <div class="card-body d-flex align-item-center justify-content-between">
-                        <img src="tumblr_n1cdbyyJHv1ste05mo1_500.gif" alt="Usuarios" style="border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); width: 100%; height: 200px;" /> 
-                    </div>
+
+
+
+			
+            <div class="main-container">
+			<script src="funtion/actualizarhora.js"></script>
+
+<?php
+    return ob_get_clean();
+}
+
+function endBody(){
+
+    ob_start();
+?>
+            
+        <!-- dividir aqui -->
+
+
+        <div class="title pb-20 pt-20">
                     
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card" style="background-color: #F7F708;">
-                    <div class="card-body d-flex align-item-center justify-content-between">
-                        <div class="card-body d-flex align-item-center justify-content-between">
-                            <img src="VETERINARIOS.gif" alt="Usuarios" style="border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); width: 100%; height: 200px;" /> 
-                        </div>
-                    </div>
-                   
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card" style="background-color: #B62A50;">
-                    <div class="card-body d-flex align-item-center justify-content-between">
-                        <img src="giphy.gif" alt="Citas pendientes" style="border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); width: 100%; height: 200px;" /> <!-- Imagen para citas pendientes -->
-                    </div>
-                   
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-
-
-
-
-            <!-- dividir aqui -->
-
-<div class="container-fluid d-flex flex-column min-vh-100">
-        <!-- Contenido principal -->
-        <div class="row flex-grow-1">
-            <div class="col">
-                <div class="title pb-20 pt-20">
-                    <h2 class="h3 mb-0">.</h2>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="row">
-            <div class="col">
-                <div class="footer-wrap bg-light">
-                    <div class="card-footer text-muted text-center">
-                        veterinaria sos todos los derechos reservados
-                        <a href="https://github.com/dorotyalvarez" target="_blank">VETERINARIA SOS</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-            <div class="main-container">
-
-
-
+                <div class="footer-wrap pd-20 mb-20 card-box">
+                    veterinaria sos todos los derechos reservados
+                    <a href="https://github.com/dorotyalvarez" target="_blank">VETERINARIA SOS</a
+					>
+				</div>
+			</div>
+		</div>
 		<!-- welcome modal start -->
 		<div class="welcome-modal">
 			<button class="welcome-modal-close">
 				<i class="bi bi-x-lg"></i>
 			</button>
-			<iframe
-				class="w-100 border-0"
-				src="https://embed.lottiefiles.com/animation/31548"
-			></iframe>
+
 			<div class="text-center">
 				<h3 class="h5 weight-500 text-center mb-2">
 					feliz dia
@@ -604,7 +489,9 @@ $recordatorios = consultarRecordatorios();
 			</div>
 			<div class="text-center mb-1">
 				<div>
-					<a>
+					<a
+						
+					>
 						<span class="text-danger weight-600">veterinario</span>
 						<span class="weight-600">FAVORITO</span>
 						<i class="fa fa-github"></i>
@@ -623,17 +510,17 @@ $recordatorios = consultarRecordatorios();
 
         <!-- welcome modal end -->
         <!-- js -->
-        <script src="../funtion/actualizarhora.js"></script>
-        <script src="../vendors/scripts/core.js"></script>
-        <script src="../vendors/scripts/script.min.js"></script>
-        <script src="../vendors/scripts/process.js"></script>
-        <script src="../vendors/scripts/layout-settings.js"></script>
-        <script src="../src/plugins/apexcharts/apexcharts.min.js"></script>
-        <script src="../src/plugins/datatables/js/jquery.dataTables.min.js"></script>
-        <script src="../src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
-        <script src="../src/plugins/datatables/js/dataTables.responsive.min.js"></script>
-        <script src="../src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
-        <script src="../vendors/scripts/dashboard3.js"></script>
+		<script src="funtion/actualizarhora.js"></script>
+        <script src="vendors/scripts/core.js"></script>
+        <script src="vendors/scripts/script.min.js"></script>
+        <script src="vendors/scripts/process.js"></script>
+        <script src="vendors/scripts/layout-settings.js"></script>
+        <script src="src/plugins/apexcharts/apexcharts.min.js"></script>
+        <script src="src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+        <script src="src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+        <script src="src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+        <script src="vendors/scripts/dashboard3.js"></script>
         <!-- Google Tag Manager (noscript) -->
         <noscript><iframe
 				src="https://www.googletagmanager.com/ns.html?id=GTM-NXZMQSS"
@@ -644,5 +531,7 @@ $recordatorios = consultarRecordatorios();
 		></noscript>
         <!-- End Google Tag Manager (noscript) -->
 </body>
-
-</html>
+<?php
+    return ob_get_clean();
+}
+?>

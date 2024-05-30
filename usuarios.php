@@ -8,6 +8,7 @@ $db = $conexion->conectar();
 $statement = $db->prepare("SELECT * FROM `cliente` WHERE active = 1");
 $statement->execute();
 $clientes = $statement->fetchAll(PDO::FETCH_ASSOC); // Cambiar fetch por fetchAll
+error_reporting(E_ALL);
 
 ?>
 

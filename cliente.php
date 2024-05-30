@@ -2,9 +2,7 @@
 require_once('funtion/scripts.php');
 require_once('template.php');
 require_once('php/conexion.php');
-if ($errorOcurred) {
-    redirectToErrorPage(404); // Por ejemplo, redirecciona a la página 404.html en caso de un error 404
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -157,26 +155,26 @@ if ($errorOcurred) {
                 </div>
                 <div class="col-12">
                     <label for="documentos" class="form-label">ID del Dueño</label>
-                    <input type="number" name="documentos" id="documentos" class="form-control form-control-lg" placeholder="ID-Dueño"required>
+                    <input type="number" name="documentos" id="documentos" class="form-control form-control-lg" placeholder="ID-Dueño">
                 </div>
                 <div class="col-12">
                     <label for="peso" class="form-label">Peso:</label>
-                    <input type="text" name="peso" id="peso" class="form-control form-control-lg" placeholder="Peso en kilogramos"required>
+                    <input type="text" name="peso" id="peso" class="form-control form-control-lg" placeholder="Peso en kilogramos">
                 </div>
                 <div class="col-12">
                     <label for="sexo" class="form-label">Sexo:</label>
-                    <select name="sexo" id="sexo" class="form-control form-control-lg" required>
+                    <select name="sexo" id="sexo" class="form-control form-control-lg" >
                     <option value="macho">Macho</option>
                     <option value="hermbra">hembra</option>
                 </select>
                 </div>
                 <div class="col-12">
                     <label for="color" class="form-label">Color:</label>
-                    <input type="text" name="color" id="color" class="form-control form-control-lg" placeholder="Color"required>
+                    <input type="text" name="color" id="color" class="form-control form-control-lg" placeholder="Color">
                 </div>
                 <div class="col-12">
                 <label for="edad" class="form-label">Edad:</label>
-                    <input type="text" name="edad" id="direccion" class="form-control form-control-lg" placeholder="Edad en Meses"required>
+                    <input type="text" name="edad" id="direccion" class="form-control form-control-lg" placeholder="Edad en Meses">
                 </div>
                 
                 <div id="mensaje-exito"></div>           
@@ -224,6 +222,10 @@ if ($errorOcurred) {
                     document.getElementById("documentos").value = id_registro_guardado;
                     // Limpiar el formulario después de mostrar el mensaje
                     document.getElementById("formulario").reset();
+                    // Desactivar todos los campos del formulario después de guardar exitosamente
+                    document.querySelectorAll('#formulario input, #formulario textarea, #formulario select').forEach(function(element) {
+                        element.disabled = true;
+                    });
                 } else {
                     // Mostrar mensaje de error
                     document.getElementById("mensaje").innerHTML = '<p style="color: red;">Error al guardar los datos.</p>';
@@ -233,34 +235,38 @@ if ($errorOcurred) {
         xhr.send(formData);
     });
 </script>
-  <script>
-      document.getElementById("btnmascota").addEventListener("click", function(event) {
-      event.preventDefault(); // Evitar el comportamiento predeterminado del botón submit
 
-    // Obtener los datos del formulario
-    var formData = new FormData(document.getElementById("formulario1"));
+<script>
+    document.getElementById("btnmascota").addEventListener("click", function(event) {
+        event.preventDefault(); // Evitar el comportamiento predeterminado del botón submit
 
-    // Enviar los datos del formulario usando AJAX
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "consultas/guardar_mascota.php");
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            // Manejar la respuesta del servidor
-            var response = JSON.parse(xhr.responseText);
-            if (response.exito) {
-                // Mostrar mensaje de éxito
-                document.getElementById("mensaje-exito").innerHTML = '<p style="color: green;">¡Los datos se han guardado correctamente!</p>';
-                // Limpiar el formulario
-                document.getElementById("formulario1").reset();
-            } else {
-                // Mostrar mensaje de error
-                document.getElementById("mensaje-exito").innerHTML = '<p style="color: red;">Error al guardar los datos.</p>';
+        // Obtener los datos del formulario
+        var formData = new FormData(document.getElementById("formulario1"));
+
+        // Enviar los datos del formulario usando AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "consultas/guardar_mascota.php");
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // Manejar la respuesta del servidor
+                var response = JSON.parse(xhr.responseText);
+                if (response.exito) {
+                    // Mostrar mensaje de éxito
+                    document.getElementById("mensaje-exito").innerHTML = '<p style="color: green;">¡Los datos se han guardado correctamente!</p>';
+                    // Redirigir a cliente.php después de 2 segundos
+                    setTimeout(function() {
+                        window.location.href = 'index.php';
+                    }, 2000); // Tiempo en milisegundos
+                } else {
+                    // Mostrar mensaje de error
+                    document.getElementById("mensaje-exito").innerHTML = '<p style="color: red;">Error al guardar los datos.</p>';
+                }
             }
-        }
-    };
-     xhr.send(formData);
-});
+        };
+        xhr.send(formData);
+    });
 </script>
+
 <script src="funtion/preview_imagen.js"></script>
 <script src="funtion/preview_imge_mascota.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

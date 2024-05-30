@@ -111,9 +111,10 @@ $clienteArray = array(
                     </select>
                 </div>
                 <div class="col-8">
-                    <label for="documento" class="form-label">ID del Dueño</label>
-                    <input type="text" name="documento" id="documento" class="form-control form-control-lg" placeholder="ID-Dueño" value="<?php echo $clienteArray["idusuario"]; ?>" required>
-                </div>
+    <label for="documento" class="form-label">ID del Dueño</label>
+    <input type="text" name="documento" id="documento" class="form-control form-control-lg" placeholder="ID-Dueño" value="<?php echo $clienteArray["idusuario"]; ?>" readonly required>
+</div>
+
                 <div class="col-8">
                     <label for="peso" class="form-label">Peso:</label>
                     <input type="number" name="peso" id="peso" class="form-control form-control-lg" placeholder="Peso kg" required>
@@ -172,7 +173,7 @@ $clienteArray = array(
                     // Redireccionar a cliente.php después de 2 segundos
                     setTimeout(function() {
                         window.location.href = 'editar.php';
-                    }, 2000); // Tiempo en milisegundos
+                    }, 1000); // Tiempo en milisegundos
                 } else {
                     // Mostrar mensaje de error
                     document.getElementById("mensaje-exito").innerHTML = '<p style="color: red;">Error al guardar los datos.</p>';

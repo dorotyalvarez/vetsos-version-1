@@ -1,42 +1,18 @@
-<?php
 
-// Función para redireccionar a la página de error correspondiente
-function redirectToErrorPage($errorCode) {
-    // Determina la página de error correspondiente según el código de error
-    $errorPages = [
-        400 => '400.html',
-        403 => '403.html',
-        404 => '404.html',
-        500 => '500.html',
-        503 => '503.html'
-    ];
-
-    // Verifica si el código de error está definido en el array
-    if (array_key_exists($errorCode, $errorPages)) {
-        // Redirecciona a la página de error correspondiente
-        header('Location: ' . $errorPages[$errorCode]);
-        exit; // Detiene la ejecución del script después de redireccionar
-    } else {
-        // En caso de un código de error no reconocido, redirecciona a una página de error genérica
-        header('Location: error.html');
-        exit;
-    }
-}
-
-// Verifica si se ha producido un error y redirige a la página de error correspondiente
-if (isset($_GET['error'])) {
-    $errorCode = $_GET['error'];
-    redirectToErrorPage($errorCode);
-}
-
-?>
 <?php
 session_start();
 if(empty($_SESSION['active'])){
 	header( "location: login.php" );  //redirect to dashboard if user is already logged in
+    exit; // Salir del script
+}
+// Verificar si el usuario tiene el rol adecuado
+if ($_SESSION['id_rol'] != 2) {
+    // Si el usuario no tiene el rol adecuado, redirigirlo a la página de error
+    header("Location: 400.html");
+    exit; // Salir del script
 }
 error_reporting(E_ALL);
-require_once(__DIR__ . '../consultas/notificaciones.php');
+require_once(__DIR__ . '/consultas/notificaciones.php');
 
 $recordatorios = consultarRecordatorios();
 

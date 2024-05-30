@@ -116,11 +116,11 @@ $clienteArray = array(
 <div>
 <form id="formulario" method="post" action="">
     <input type="hidden" name="idusuario" value="<?php echo $idCliente; ?>"/> 
-    <a href="usuarios.php" class="btn_cancel">cancelar</a>
+    <a href="editar.php?id=<?php echo $idCliente; ?>" class="btn_cancel">cancelar</a>
     <input type="submit" value="Confirmar eliminación" class="btn_ok"/> 
 </form>
 <div class="mt-3 text-right">
-    <button onclick="window.location.href = 'editar.php'" class="btn btn-secondary">Volver a Usuarios</button>
+<button onclick="window.location.href = 'editar.php?id=<?php echo $idCliente; ?>'" class="btn btn-warning">Volver a cliente</button>
 </div>
 <style>
     .btn_cancel {

@@ -1,1 +1,245 @@
-REDEEM240417
+/* Estilos para la sección de servicios */
+
+.our-services {
+    background-color: #f8f9fa;
+    /* Color de fondo claro */
+    padding: 60px 0;
+}
+
+.our-services h2 {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 40px;
+}
+
+.service-link {
+    text-decoration: none;
+    /* Elimina el subrayado del enlace */
+    color: inherit;
+    /* Hereda el color del texto */
+}
+
+.service-box {
+    background-color: #ffffff;
+    border: none;
+    /* Eliminar el borde */
+    padding: 30px;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Añadir sombra */
+    position: relative;
+    /* Para el fondo */
+}
+
+.service-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.service-icon {
+    font-size: 5em;
+    /* Ajusta el tamaño del icono */
+    color: #00bcd4;
+    /* Color del icono */
+    margin-bottom: 20px;
+}
+
+.service-icon svg {
+    width: 100px;
+    /* Tamaño de los iconos SVG */
+    height: 100px;
+}
+
+.service-box h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.service-box p {
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+
+/* Media queries para dispositivos móviles */
+
+@media (max-width: 768px) {
+    .service-box {
+        margin-bottom: 20px;
+    }
+}
+
+
+/* Estilos para la sección de "¿Quiénes somos?" */
+
+.about-us {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+}
+
+.about-us h2 {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.about-us p {
+    color: #333;
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+.team-member {
+    background-color: #ffffff;
+    border: none;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.team-member h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.team-member p {
+    color: #666;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+
+/* Media queries para dispositivos móviles */
+
+@media (max-width: 768px) {
+    .team-member {
+        margin-bottom: 20px;
+    }
+}
+
+
+/* Estilos para la sección de "Nuestra Historia" */
+
+.our-history {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+}
+
+.our-history h2 {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 40px;
+}
+
+.our-history p {
+    color: #333;
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+.our-history img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+
+/* Media queries para dispositivos móviles */
+
+@media (max-width: 768px) {
+    .our-history img {
+        margin-bottom: 20px;
+    }
+}
+
+
+/* Estilos para la sección de productos */
+
+.products {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+}
+
+.products h2 {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 40px;
+}
+
+.product-box {
+    background-color: #ffffff;
+    border: none;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.product-box img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.product-box h5 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.product-box p {
+    color: #666;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+.product-box .btn {
+    background-color: #00bcd4;
+    border: none;
+    color: white;
+}
+
+.product-box .btn:hover {
+    background-color: #0097a7;
+}
+
+
+/* Media queries para dispositivos móviles */
+
+@media (max-width: 768px) {
+    .product-box {
+        margin-bottom: 20px;
+    }
+}

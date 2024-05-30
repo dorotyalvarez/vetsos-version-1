@@ -2,9 +2,21 @@
 <html>
 <?php
 session_start();
+
+// Verificar si el usuario está logueado
 if (empty($_SESSION['active'])) {
-    header("location: login.php");  //redirect to dashboard if user is already logged in
+    header("location: login.php"); // Redirigir al inicio de sesión si el usuario no está logueado
+    exit; // Salir del script
 }
+// Verificar si el usuario tiene el rol adecuado
+if ($_SESSION['id_rol'] != 2) {
+    // Si el usuario no tiene el rol adecuado, redirigirlo a la página de error
+    header("Location: 400.html");
+    exit; // Salir del script
+}
+
+
+
 error_reporting(E_ALL);
 require_once('funtion/scripts.php');
 require_once(__DIR__ . '/consultas/estadistica.php');
@@ -186,9 +198,7 @@ $recordatorios = consultarRecordatorios();
                         <span class="user-name"><?php echo $_SESSION['nombre']; ?></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
-                        <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
-                        <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
+                        <a class="dropdown-item" href="profile.php"><i class="dw dw-user1"></i> Profile</a>
                         <a class="dropdown-item" href=controllers/salir.php><i class="dw dw-logout"></i> Log Out</a>
                     </div>
 
@@ -445,7 +455,7 @@ $recordatorios = consultarRecordatorios();
                         </div>
                     </div>
                 </div>
-                <div class="col-md-1">mascotas</div>
+                <div class="col-md-1"></div>
             </div>
         </div>
     </section>
@@ -542,13 +552,14 @@ $recordatorios = consultarRecordatorios();
                 <div class="col-md-3">
                     <div class="card bg-success">
                         <div class="card-body d-flex align-item-center justify-content-between">
-                            usuarios
+                            clientes
                             <i class="bi bi-person-circle"></i>
                             
                         </div>
                         <div class="card-footer d-flex align-item-center justify-content-between">
                           Total: <?php echo $clientesActivos; ?>
-                        <a href="<?php /* Aquí la URL para ver detalles */ ?>" class="text-white">Ver detalles</a>
+                          <a href="usuarios.php" class="text-white">Ver detalles</a>
+
                         </div>
                     </div>
                 </div>
@@ -560,7 +571,8 @@ $recordatorios = consultarRecordatorios();
                         </div>
                         <div class="card-footer d-flex align-item-center justify-content-between"> 
                             Total: <?php echo $citasAtendidas; ?>
-                        <a href="<?php /* URL para ver detalles */ ?>" class="text-white">Ver detalles</a>
+                            <a href="citas_atendida.php" class="text-white">Ver detalles</a>
+
                         </div>
                     </div>
                 </div>
@@ -572,7 +584,7 @@ $recordatorios = consultarRecordatorios();
                         </div>
                         <div class="card-footer d-flex align-item-center justify-content-between">
                         <span><?php echo obtenerCitasPendientes(); ?></span>
-                        <a href="<?php /* Agrega el enlace para ver detalles */ ?>" class="text-white">ver detalles</a>
+                        <a href="citas_programadas.php" class="text-white">Ver detalles</a>
                         </div>
                     </div>
                 </div>
@@ -590,24 +602,24 @@ $recordatorios = consultarRecordatorios();
                 <div class="col-md-2">
                     <div class="card bg-success">
                         <div class="card-body d-flex align-item-center justify-content-between">
-                            pendientes
+                            pendientes totales
                             <i class="bi bi-chat-square-dots-fill"></i>
                         </div>
                         <div class="card-footer d-flex align-item-center justify-content-between">
                           Total: <?php echo $mensajesPendientes; ?>
-                        <a href="<?php /* Aquí la URL para ver detalles */ ?>" class="text-white">Ver detalles</a>
+                        
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="card bg-danger">
                         <div class="card-body d-flex align-item-center justify-content-between">
-                            recordatorios     
+                            recordatorios  totales   
                             <i class="bi bi-calendar-event-fill"></i>
                         </div>
                         <div class="card-footer d-flex align-item-center justify-content-between"> 
                             Total: <?php echo $recordatoriosPendientes; ?>
-                        <a href="<?php /* URL para ver detalles */ ?>" class="text-white">Ver detalles</a>
+                        
                         </div>
                     </div>
                 </div>
@@ -619,7 +631,7 @@ $recordatorios = consultarRecordatorios();
                         </div>
                         <div class="card-footer d-flex align-item-center justify-content-between">
                         <span><?php echo $totalMascotas; ?></span>
-                        <a href="<?php /* Agrega el enlace para ver detalles */ ?>" class="text-white">ver detalles</a>
+                       
                         </div>
                     </div>
                 </div>
@@ -631,7 +643,7 @@ $recordatorios = consultarRecordatorios();
                         </div>
                         <div class="card-footer d-flex align-item-center justify-content-between">
                         <span><?php echo $totaMensajesAtendidos ; ?></span>
-                        <a href="<?php /* Agrega el enlace para ver detalles */ ?>" class="text-white">ver detalles</a>
+                        
                         </div>
                     </div>
                 </div>
@@ -643,7 +655,7 @@ $recordatorios = consultarRecordatorios();
                         </div>
                         <div class="card-footer d-flex align-item-center justify-content-between">
                         <span><?php echo $totaMensajes; ?></span>
-                        <a href="<?php /* Agrega el enlace para ver detalles */ ?>" class="text-white">ver detalles</a>
+                       
                         </div>
                     </div>
                 </div>

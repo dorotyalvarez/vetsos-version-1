@@ -1,11 +1,16 @@
 <?php
 session_start();
 if(empty($_SESSION['active'])){
-	header( "location: ../login.php" );  //redirect to dashboard if user is already logged in
+	header( "location: /login.php" );  //redirect to dashboard if user is already logged in
+}
+if ($_SESSION['id_rol'] != 4) {
+    // Si el usuario no tiene el rol adecuado, redirigirlo a la página de error
+    header("Location: 403.html");
+    exit; // Salir del script
 }
 error_reporting(E_ALL);
 
-require_once(__DIR__ . '../consultas/notificaciones.php');
+require_once(__DIR__ . '/consultas/notificaciones.php');
 
 $recordatorios = consultarRecordatorios();
 

@@ -2,53 +2,72 @@
 <?php
 $alert = '';
 session_start();
-if(!empty($_SESSION['active'])){
-    header( "location: login.php" );  //redirect to dashboard if user is already logged in
-}else{
-    
 
-    if(!empty($_POST)){
-    
-   if(empty($_POST{'usuario'}) || empty( $_POST['clave'] )){
-    $alert= "ingrese su usuario y clave"; 
-   }else  {
-    require_once "php/conexion.php";
+if (empty($_SESSION['active'])) {
+    if (!empty($_POST)) {
+        if (empty($_POST['usuario']) || empty($_POST['clave'])) {
+            $alert = "Ingrese su usuario y clave";
+        } else {
+            require_once "php/conexion.php";
 
-    $user = mysqli_real_escape_string($conection,$_POST['usuario']) ;
-    $pass = md5(mysqli_real_escape_string($conection,$_POST['clave']));
-    //verificar si el usuario
-    $query = mysqli_query($conection,"SELECT * FROM usuarios WHERE user_name = '$user' AND password = '$pass'");
-    $result = mysqli_num_rows($query);
-        if ($result >0) {
-            $data=mysqli_fetch_array($query);
-            
-            $_SESSION['active']= true;
-            $_SESSION['idUsuario']= $data['idUsuario'];
-            $_SESSION['nombre']=$data['nombre'];
-            $_SESSION['pass']=$data['password'];
-            $_SESSION['apellido']=$data['apellido'];
-            $_SESSION['identificacion']=$data['identificacion'];
-            $_SESSION['email']=$data['email'];
-            $_SESSION['id_rol']=$data['id_rol'];
+            $user = mysqli_real_escape_string($conection, $_POST['usuario']);
+            $pass = mysqli_real_escape_string($conection, $_POST['clave']);  // La contraseña sin hashear para verificar
 
-            if ($_SESSION['id_rol'] == 1) {
-                header("Location: admin/index.php"); // Redirige a la página de administrador si el rol es 1
-            } elseif ($_SESSION['id_rol'] == 2) {
-                header("Location: index.php"); // Redirige a la página de usuario normal si el rol es 2
-            } elseif ($_SESSION['id_rol'] == 4) {
-                header("Location: doctor/index.php"); // Redirige a la página de usuario normal si el rol es 4
+            $query = mysqli_query($conection, "SELECT * FROM usuarios WHERE user_name = '$user'");
+            $result = mysqli_num_rows($query);
+
+            if ($result > 0) {
+                $data = mysqli_fetch_array($query);
+                
+                // Verifica la contraseña usando md5 o password_verify
+                if (md5($pass) === $data['password'] || password_verify($pass, $data['password'])) {
+                    // Si la contraseña es correcta, iniciamos la sesión
+                    $_SESSION['active'] = true;
+                    $_SESSION['idUsuario'] = $data['idUsuario'];
+                    $_SESSION['nombre'] = $data['nombre'];
+                    $_SESSION['pass'] = $data['password'];
+                    $_SESSION['apellido'] = $data['apellido'];
+                    $_SESSION['identificacion'] = $data['identificacion'];
+                    $_SESSION['email'] = $data['email'];
+                    $_SESSION['id_rol'] = $data['id_rol'];
+
+                    // Redirección basada en el rol del usuario
+                    if ($_SESSION['id_rol'] == 1) {
+                        header("Location: admin/index.php");
+                        exit;
+                    } elseif ($_SESSION['id_rol'] == 2) {
+                        header("Location: index.php");
+                        exit;
+                    } elseif ($_SESSION['id_rol'] == 4) {
+                        header("Location: doctor/index.php");
+                        exit;
+                    } else {
+                        $alert = "Usuario o contraseña incorrectos.";
+                        session_destroy();
+                    }
+                } else {
+                    $alert = "Usuario o contraseña incorrectos.";
+                    session_destroy();
+                }
             } else {
                 $alert = "Usuario o contraseña incorrectos.";
-                session_destroy();
             }
-        };
-
-     };
-
-  };
-};
-
- ?>
+        }
+    }
+} else {
+    // Si el usuario ya está logueado, redirigirlo según su rol
+    if ($_SESSION['id_rol'] == 1) {
+        header("Location: admin/index.php");
+        exit;
+    } elseif ($_SESSION['id_rol'] == 2) {
+        header("Location: index.php");
+        exit;
+    } elseif ($_SESSION['id_rol'] == 4) {
+        header("Location: doctor/index.php");
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 <?php include 'head.php'; ?>

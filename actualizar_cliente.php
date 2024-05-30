@@ -68,7 +68,7 @@ $clienteArray = array(
 <section>
     <div class="container">
     <div class="col-md-4">
-<button onclick="window.location.href = 'usuarios.php'" class="btn btn-outline-warning">Volver a Cliente</button>
+    <button onclick="window.location.href = 'editar.php?id=<?php echo $idCliente; ?>'" class="btn btn-warning">Volver a cliente</button>
    </div>
         <div class="row mt-4">
             <!-- Tarjeta para la imagen de perfil -->
@@ -159,7 +159,7 @@ $clienteArray = array(
                     // Redireccionar a editar.php después de 2 segundos
                     setTimeout(function() {
                         window.location.href = 'editar.php';
-                    }, 2000); // Tiempo en milisegundos
+                    }, 1000); // Tiempo en milisegundos
                 } else {
                     // Mostrar mensaje de error
                     document.getElementById("mensaje").innerHTML = '<p style="color: red;">Error al guardar los datos.</p>';
